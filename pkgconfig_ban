@@ -1,0 +1,8 @@
+# This file contains pkgconfig build requirements that get picked up
+# but are undesirable. One entry per line, no whitespace.
+libopenjp2
+libopenjpeg
+poppler-data
+lcms
+lcms2
+cairo
