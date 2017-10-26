@@ -4,7 +4,7 @@
 #
 Name     : poppler
 Version  : 0.60.1
-Release  : 1
+Release  : 3
 URL      : https://poppler.freedesktop.org/poppler-0.60.1.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.60.1.tar.xz
 Summary  : No detailed summary available
@@ -15,10 +15,11 @@ Requires: poppler-lib
 Requires: poppler-doc
 BuildRequires : cmake
 BuildRequires : curl-dev
-BuildRequires : freetype-dev
+BuildRequires : gtk+-dev
 BuildRequires : libjpeg-turbo-dev
 BuildRequires : openjpeg-dev
-BuildRequires : pkgconfig(fontconfig)
+BuildRequires : pkgconfig(cairo-pdf)
+BuildRequires : pkgconfig(lcms2)
 BuildRequires : pkgconfig(nss)
 
 %description
@@ -80,15 +81,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1509048412
+export SOURCE_DATE_EPOCH=1509064331
 mkdir clr-build
 pushd clr-build
-cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DENABLE_XPDF_HEADERS=ON
+cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON
 make VERBOSE=1  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1509048412
+export SOURCE_DATE_EPOCH=1509064331
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
@@ -105,6 +106,7 @@ popd
 /usr/bin/pdfinfo
 /usr/bin/pdfseparate
 /usr/bin/pdfsig
+/usr/bin/pdftocairo
 /usr/bin/pdftohtml
 /usr/bin/pdftoppm
 /usr/bin/pdftops
@@ -208,6 +210,20 @@ popd
 /usr/include/poppler/fofi/FoFiTrueType.h
 /usr/include/poppler/fofi/FoFiType1.h
 /usr/include/poppler/fofi/FoFiType1C.h
+/usr/include/poppler/glib/poppler-action.h
+/usr/include/poppler/glib/poppler-annot.h
+/usr/include/poppler/glib/poppler-attachment.h
+/usr/include/poppler/glib/poppler-date.h
+/usr/include/poppler/glib/poppler-document.h
+/usr/include/poppler/glib/poppler-enums.h
+/usr/include/poppler/glib/poppler-features.h
+/usr/include/poppler/glib/poppler-form-field.h
+/usr/include/poppler/glib/poppler-layer.h
+/usr/include/poppler/glib/poppler-media.h
+/usr/include/poppler/glib/poppler-movie.h
+/usr/include/poppler/glib/poppler-page.h
+/usr/include/poppler/glib/poppler-structure-element.h
+/usr/include/poppler/glib/poppler.h
 /usr/include/poppler/goo/FixedPoint.h
 /usr/include/poppler/goo/GooHash.h
 /usr/include/poppler/goo/GooLikely.h
@@ -248,8 +264,11 @@ popd
 /usr/include/poppler/splash/SplashXPath.h
 /usr/include/poppler/splash/SplashXPathScanner.h
 /usr/lib64/libpoppler-cpp.so
+/usr/lib64/libpoppler-glib.so
 /usr/lib64/libpoppler.so
+/usr/lib64/pkgconfig/poppler-cairo.pc
 /usr/lib64/pkgconfig/poppler-cpp.pc
+/usr/lib64/pkgconfig/poppler-glib.pc
 /usr/lib64/pkgconfig/poppler-splash.pc
 /usr/lib64/pkgconfig/poppler.pc
 
@@ -261,5 +280,7 @@ popd
 %defattr(-,root,root,-)
 /usr/lib64/libpoppler-cpp.so.0
 /usr/lib64/libpoppler-cpp.so.0.3.0
+/usr/lib64/libpoppler-glib.so.8
+/usr/lib64/libpoppler-glib.so.8.9.0
 /usr/lib64/libpoppler.so.71
 /usr/lib64/libpoppler.so.71.0.0
