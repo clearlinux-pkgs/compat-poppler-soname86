@@ -4,7 +4,7 @@
 #
 Name     : poppler
 Version  : 0.60.1
-Release  : 3
+Release  : 4
 URL      : https://poppler.freedesktop.org/poppler-0.60.1.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.60.1.tar.xz
 Summary  : No detailed summary available
@@ -17,7 +17,11 @@ BuildRequires : cmake
 BuildRequires : curl-dev
 BuildRequires : gtk+-dev
 BuildRequires : libjpeg-turbo-dev
-BuildRequires : openjpeg-dev
+BuildRequires : pkgconfig(Qt5Core)
+BuildRequires : pkgconfig(Qt5Gui)
+BuildRequires : pkgconfig(Qt5Test)
+BuildRequires : pkgconfig(Qt5Widgets)
+BuildRequires : pkgconfig(Qt5Xml)
 BuildRequires : pkgconfig(cairo-pdf)
 BuildRequires : pkgconfig(lcms2)
 BuildRequires : pkgconfig(nss)
@@ -81,15 +85,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1509064331
+export SOURCE_DATE_EPOCH=1513867005
 mkdir clr-build
 pushd clr-build
-cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON
+cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
 make VERBOSE=1  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1509064331
+export SOURCE_DATE_EPOCH=1513867005
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
@@ -146,7 +150,7 @@ popd
 /usr/include/poppler/Hints.h
 /usr/include/poppler/JArithmeticDecoder.h
 /usr/include/poppler/JBIG2Stream.h
-/usr/include/poppler/JPEG2000Stream.h
+/usr/include/poppler/JPXStream.h
 /usr/include/poppler/Lexer.h
 /usr/include/poppler/Linearization.h
 /usr/include/poppler/Link.h
