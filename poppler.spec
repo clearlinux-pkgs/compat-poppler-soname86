@@ -4,7 +4,7 @@
 #
 Name     : poppler
 Version  : 0.62.0
-Release  : 7
+Release  : 8
 URL      : https://poppler.freedesktop.org/poppler-0.62.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.62.0.tar.xz
 Summary  : No detailed summary available
@@ -85,19 +85,19 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1517780911
+export SOURCE_DATE_EPOCH=1518730153
 mkdir clr-build
 pushd clr-build
-export CFLAGS="$CFLAGS -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -fstack-protector-strong "
-export FFLAGS="$CFLAGS -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong "
+export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
+export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
+export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
+export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make VERBOSE=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1517780911
+export SOURCE_DATE_EPOCH=1518730153
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
@@ -247,6 +247,14 @@ popd
 /usr/include/poppler/goo/gstrtod.h
 /usr/include/poppler/goo/gtypes.h
 /usr/include/poppler/poppler-config.h
+/usr/include/poppler/qt5/poppler-annotation.h
+/usr/include/poppler/qt5/poppler-export.h
+/usr/include/poppler/qt5/poppler-form.h
+/usr/include/poppler/qt5/poppler-link.h
+/usr/include/poppler/qt5/poppler-media.h
+/usr/include/poppler/qt5/poppler-optcontent.h
+/usr/include/poppler/qt5/poppler-page-transition.h
+/usr/include/poppler/qt5/poppler-qt5.h
 /usr/include/poppler/splash/Splash.h
 /usr/include/poppler/splash/SplashBitmap.h
 /usr/include/poppler/splash/SplashClip.h
@@ -269,10 +277,12 @@ popd
 /usr/include/poppler/splash/SplashXPathScanner.h
 /usr/lib64/libpoppler-cpp.so
 /usr/lib64/libpoppler-glib.so
+/usr/lib64/libpoppler-qt5.so
 /usr/lib64/libpoppler.so
 /usr/lib64/pkgconfig/poppler-cairo.pc
 /usr/lib64/pkgconfig/poppler-cpp.pc
 /usr/lib64/pkgconfig/poppler-glib.pc
+/usr/lib64/pkgconfig/poppler-qt5.pc
 /usr/lib64/pkgconfig/poppler-splash.pc
 /usr/lib64/pkgconfig/poppler.pc
 
@@ -286,5 +296,7 @@ popd
 /usr/lib64/libpoppler-cpp.so.0.3.0
 /usr/lib64/libpoppler-glib.so.8
 /usr/lib64/libpoppler-glib.so.8.9.0
+/usr/lib64/libpoppler-qt5.so.1
+/usr/lib64/libpoppler-qt5.so.1.12.0
 /usr/lib64/libpoppler.so.73
 /usr/lib64/libpoppler.so.73.0.0
