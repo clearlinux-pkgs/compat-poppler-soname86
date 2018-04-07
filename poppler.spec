@@ -4,7 +4,7 @@
 #
 Name     : poppler
 Version  : 0.63.0
-Release  : 11
+Release  : 12
 URL      : https://poppler.freedesktop.org/poppler-0.63.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.63.0.tar.xz
 Summary  : No detailed summary available
@@ -69,6 +69,14 @@ Group: Documentation
 doc components for the poppler package.
 
 
+%package extras
+Summary: extras components for the poppler package.
+Group: Default
+
+%description extras
+extras components for the poppler package.
+
+
 %package lib
 Summary: lib components for the poppler package.
 Group: Libraries
@@ -88,7 +96,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1523119921
+export SOURCE_DATE_EPOCH=1523120181
 mkdir clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
@@ -111,7 +119,7 @@ make  %{?_smp_mflags}  || :
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1523119921
+export SOURCE_DATE_EPOCH=1523120181
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/lib64/haswell/avx512_1
 pushd clr-build-avx2
@@ -143,6 +151,17 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
+%exclude /usr/include/poppler/qt5/poppler-annotation.h
+%exclude /usr/include/poppler/qt5/poppler-export.h
+%exclude /usr/include/poppler/qt5/poppler-form.h
+%exclude /usr/include/poppler/qt5/poppler-link.h
+%exclude /usr/include/poppler/qt5/poppler-media.h
+%exclude /usr/include/poppler/qt5/poppler-optcontent.h
+%exclude /usr/include/poppler/qt5/poppler-page-transition.h
+%exclude /usr/include/poppler/qt5/poppler-qt5.h
+%exclude /usr/lib64/haswell/libpoppler-qt5.so
+%exclude /usr/lib64/libpoppler-qt5.so
+%exclude /usr/lib64/pkgconfig/poppler-qt5.pc
 /usr/include/poppler/Annot.h
 /usr/include/poppler/Array.h
 /usr/include/poppler/BuiltinFont.h
@@ -267,14 +286,6 @@ popd
 /usr/include/poppler/goo/gstrtod.h
 /usr/include/poppler/goo/gtypes.h
 /usr/include/poppler/poppler-config.h
-/usr/include/poppler/qt5/poppler-annotation.h
-/usr/include/poppler/qt5/poppler-export.h
-/usr/include/poppler/qt5/poppler-form.h
-/usr/include/poppler/qt5/poppler-link.h
-/usr/include/poppler/qt5/poppler-media.h
-/usr/include/poppler/qt5/poppler-optcontent.h
-/usr/include/poppler/qt5/poppler-page-transition.h
-/usr/include/poppler/qt5/poppler-qt5.h
 /usr/include/poppler/splash/Splash.h
 /usr/include/poppler/splash/SplashBitmap.h
 /usr/include/poppler/splash/SplashClip.h
@@ -297,16 +308,13 @@ popd
 /usr/include/poppler/splash/SplashXPathScanner.h
 /usr/lib64/haswell/libpoppler-cpp.so
 /usr/lib64/haswell/libpoppler-glib.so
-/usr/lib64/haswell/libpoppler-qt5.so
 /usr/lib64/haswell/libpoppler.so
 /usr/lib64/libpoppler-cpp.so
 /usr/lib64/libpoppler-glib.so
-/usr/lib64/libpoppler-qt5.so
 /usr/lib64/libpoppler.so
 /usr/lib64/pkgconfig/poppler-cairo.pc
 /usr/lib64/pkgconfig/poppler-cpp.pc
 /usr/lib64/pkgconfig/poppler-glib.pc
-/usr/lib64/pkgconfig/poppler-qt5.pc
 /usr/lib64/pkgconfig/poppler-splash.pc
 /usr/lib64/pkgconfig/poppler.pc
 
@@ -314,21 +322,39 @@ popd
 %defattr(-,root,root,-)
 %doc /usr/share/man/man1/*
 
+%files extras
+%defattr(-,root,root,-)
+/usr/include/poppler/qt5/poppler-annotation.h
+/usr/include/poppler/qt5/poppler-export.h
+/usr/include/poppler/qt5/poppler-form.h
+/usr/include/poppler/qt5/poppler-link.h
+/usr/include/poppler/qt5/poppler-media.h
+/usr/include/poppler/qt5/poppler-optcontent.h
+/usr/include/poppler/qt5/poppler-page-transition.h
+/usr/include/poppler/qt5/poppler-qt5.h
+/usr/lib64/haswell/libpoppler-qt5.so
+/usr/lib64/haswell/libpoppler-qt5.so.1
+/usr/lib64/haswell/libpoppler-qt5.so.1.13.0
+/usr/lib64/libpoppler-qt5.so
+/usr/lib64/libpoppler-qt5.so.1
+/usr/lib64/libpoppler-qt5.so.1.13.0
+/usr/lib64/pkgconfig/poppler-qt5.pc
+
 %files lib
 %defattr(-,root,root,-)
+%exclude /usr/lib64/haswell/libpoppler-qt5.so.1
+%exclude /usr/lib64/haswell/libpoppler-qt5.so.1.13.0
+%exclude /usr/lib64/libpoppler-qt5.so.1
+%exclude /usr/lib64/libpoppler-qt5.so.1.13.0
 /usr/lib64/haswell/libpoppler-cpp.so.0
 /usr/lib64/haswell/libpoppler-cpp.so.0.4.0
 /usr/lib64/haswell/libpoppler-glib.so.8
 /usr/lib64/haswell/libpoppler-glib.so.8.9.0
-/usr/lib64/haswell/libpoppler-qt5.so.1
-/usr/lib64/haswell/libpoppler-qt5.so.1.13.0
 /usr/lib64/haswell/libpoppler.so.74
 /usr/lib64/haswell/libpoppler.so.74.0.0
 /usr/lib64/libpoppler-cpp.so.0
 /usr/lib64/libpoppler-cpp.so.0.4.0
 /usr/lib64/libpoppler-glib.so.8
 /usr/lib64/libpoppler-glib.so.8.9.0
-/usr/lib64/libpoppler-qt5.so.1
-/usr/lib64/libpoppler-qt5.so.1.13.0
 /usr/lib64/libpoppler.so.74
 /usr/lib64/libpoppler.so.74.0.0
