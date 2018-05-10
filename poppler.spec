@@ -4,7 +4,7 @@
 #
 Name     : poppler
 Version  : 0.64.0
-Release  : 14
+Release  : 15
 URL      : https://poppler.freedesktop.org/poppler-0.64.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.64.0.tar.xz
 Summary  : No detailed summary available
