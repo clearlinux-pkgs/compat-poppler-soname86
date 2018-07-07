@@ -1,0 +1,10 @@
+0.66.0
+pkgconfig(lcms2)
+pkgconfig(Qt5Gui)
+pkgconfig(Qt5Widgets)
+pkgconfig(Qt5Test)
+pkgconfig(Qt5Core)
+pkgconfig(Qt5Xml)
+curl-dev
+pkgconfig(nss)
+gtk+-dev
