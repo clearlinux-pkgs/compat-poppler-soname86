@@ -19,4 +19,5 @@ libpng16.so.16
 libpthread.so.0
 libsmime3.so
 libstdc++.so.6
+libtiff.so.5
 libz.so.1
