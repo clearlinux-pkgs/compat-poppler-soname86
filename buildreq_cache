@@ -1,7 +1,7 @@
-0.67.0
-pkgconfig(lcms2)
+0.68.0
 curl-dev
-pkgconfig(nss)
 gtk+-dev
+pkgconfig(lcms2)
+pkgconfig(nss)
 qtbase-dev
 tiff-dev
