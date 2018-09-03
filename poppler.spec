@@ -4,7 +4,7 @@
 #
 Name     : poppler
 Version  : 0.68.0
-Release  : 20
+Release  : 21
 URL      : https://poppler.freedesktop.org/poppler-0.68.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.68.0.tar.xz
 Summary  : No detailed summary available
@@ -25,11 +25,18 @@ BuildRequires : libpng-dev
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(cairo-pdf)
 BuildRequires : pkgconfig(fontconfig)
+BuildRequires : pkgconfig(gdk-pixbuf-2.0)
+BuildRequires : pkgconfig(gio-2.0)
+BuildRequires : pkgconfig(glib-2.0)
+BuildRequires : pkgconfig(gobject-2.0)
+BuildRequires : pkgconfig(gtk+-3.0)
 BuildRequires : pkgconfig(lcms2)
 BuildRequires : pkgconfig(nss)
+BuildRequires : qtbase-dev
 BuildRequires : qtbase-extras
 BuildRequires : tiff-dev
 BuildRequires : zlib-dev
+Patch1: CVE-2018-13988.nopatch
 
 %description
 This is poppler, a PDF rendering library.
@@ -112,7 +119,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534717174
+export SOURCE_DATE_EPOCH=1536004239
 mkdir clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -135,7 +142,7 @@ make VERBOSE=1  %{?_smp_mflags}  || :
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1534717174
+export SOURCE_DATE_EPOCH=1536004239
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/poppler
 cp COPYING %{buildroot}/usr/share/doc/poppler/COPYING
