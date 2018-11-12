@@ -5,3 +5,4 @@ libjpeg-turbo-dev
 # for /usr/bin/qmake
 qtbase-extras
 buildreq-kde
+glibc-bin
