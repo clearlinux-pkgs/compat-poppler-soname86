@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.71.0
-Release  : 23
+Release  : 24
 URL      : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz.sig
@@ -141,7 +141,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542046316
+export SOURCE_DATE_EPOCH=1542130088
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -164,7 +164,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1542046316
+export SOURCE_DATE_EPOCH=1542130088
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -182,10 +182,10 @@ popd
 
 %files abi
 %defattr(-,root,root,-)
-/usr/share/abi/libpoppler-cpp.so.0.5.0.abi
-/usr/share/abi/libpoppler-glib.so.8.10.0.abi
-/usr/share/abi/libpoppler-qt5.so.1.17.0.abi
-/usr/share/abi/libpoppler.so.82.0.0.abi
+/usr/share/abi/libpoppler-cpp.so.0.abi
+/usr/share/abi/libpoppler-glib.so.8.abi
+/usr/share/abi/libpoppler-qt5.so.1.abi
+/usr/share/abi/libpoppler.so.82.abi
 
 %files bin
 %defattr(-,root,root,-)
