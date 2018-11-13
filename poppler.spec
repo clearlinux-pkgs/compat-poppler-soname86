@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.71.0
-Release  : 22
+Release  : 23
 URL      : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz.sig
