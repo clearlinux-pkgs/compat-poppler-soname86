@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.71.0
-Release  : 24
+Release  : 25
 URL      : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.71.0.tar.xz.sig
@@ -56,14 +56,6 @@ poppler in the short term introduces yet another xpdf derived code
 base to the world, we hope that over time these applications will
 adopt poppler.  After all, we only need one application to use poppler
 to break even.
-
-%package abi
-Summary: abi components for the poppler package.
-Group: Default
-
-%description abi
-abi components for the poppler package.
-
 
 %package bin
 Summary: bin components for the poppler package.
@@ -141,7 +133,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542130088
+export SOURCE_DATE_EPOCH=1542752154
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -164,7 +156,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1542130088
+export SOURCE_DATE_EPOCH=1542752154
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -179,13 +171,6 @@ popd
 
 %files
 %defattr(-,root,root,-)
-
-%files abi
-%defattr(-,root,root,-)
-/usr/share/abi/libpoppler-cpp.so.0.abi
-/usr/share/abi/libpoppler-glib.so.8.abi
-/usr/share/abi/libpoppler-qt5.so.1.abi
-/usr/share/abi/libpoppler.so.82.abi
 
 %files bin
 %defattr(-,root,root,-)
