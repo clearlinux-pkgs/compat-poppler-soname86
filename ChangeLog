@@ -1,3 +1,967 @@
+commit 9414cc632c17afb7b78c559447b2044268f06cfc
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Dec 6 17:22:06 2018 +0100
+
+    Poppler 0.72.0
+
+ CMakeLists.txt      |  4 ++--
+ NEWS                | 27 +++++++++++++++++++++++++++
+ cpp/Doxyfile        |  2 +-
+ glib/CMakeLists.txt |  2 +-
+ 4 files changed, 31 insertions(+), 4 deletions(-)
+
+commit 8db8b4ead169e9ac3ad3f274828f6ad25951a6fb
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Dec 6 17:21:32 2018 +0100
+
+    qt5: Revert involuntary ABI change
+
+ qt5/src/Doxyfile        | 2 +-
+ qt5/src/poppler-link.cc | 4 ++--
+ qt5/src/poppler-link.h  | 6 ++++--
+ 3 files changed, 7 insertions(+), 5 deletions(-)
+
+commit 4e53767cabc93a2c8d17b338bbf4309669696bd8
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Dec 1 22:26:03 2018 +0100
+
+    glib: docs: Reorganise sections
+
+    Sort sections, and add missing functions.
+
+ glib/reference/poppler-sections.txt | 762
+ ++++++++++++++++++------------------
+ glib/reference/poppler.types        |  85 +++-
+ 2 files changed, 456 insertions(+), 391 deletions(-)
+
+commit a8bb420fe01be16293f0f4b18f299414afe0a125
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Dec 1 22:26:03 2018 +0100
+
+    glib: docs: Add missing indices of API-added-by-version
+
+ glib/reference/poppler-docs.sgml | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit a6aee51c1be09dcef03c1dfe924752bbb211ae6a
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Wed Nov 28 20:36:50 2018 +0100
+
+    Fix typos in utils.
+
+ utils/pdftohtml.cc | 2 +-
+ utils/pdftops.cc   | 2 +-
+ utils/pdftotext.cc | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+commit dc00f29828feb4192df59b1c1be783d631c2ef5a
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 28 20:06:20 2018 +0100
+
+    Update (C)
+
+ goo/GooString.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 853623c23e0c805e9b04c59f9449b388a485f31a
+Author: Greg Knight <lyngvi@gmail.com>
+Date:   Wed Nov 28 08:44:39 2018 -0500
+
+    use qt5 _data tests per Adam Reichold's recommendation
+
+ qt5/tests/check_goostring.cpp | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
+
+commit 96a0c301a13d02570f44dc0eafbc97b302e996cb
+Author: Greg Knight <lyngvi@gmail.com>
+Date:   Tue Nov 27 18:37:25 2018 -0500
+
+    add testFromInt to fail if GooString::fromInt is broken again
+
+ qt5/tests/check_goostring.cpp | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit 903983bbd921a5139e3cd6de227b571870c764d8
+Author: Greg Knight <lyngvi@gmail.com>
+Date:   Sun Nov 25 15:47:18 2018 -0500
+
+    gooString::fromInt: Repair the return value.
+    formatInt renders from "right to left" and returns the position of
+    the most significant digit in 'p' - which is not generally equal to
+    'buf' in the case of GooString::fromInt (unless you're rendering a
+    24-digit number.)
+
+    This repairs several issues in pdftohtml
+
+ goo/GooString.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8315a1234fb4332d202e3a728938359777706daa
+Author: Aleix Pol <aleixpol@kde.org>
+Date:   Mon Nov 19 17:57:32 2018 +0100
+
+    Include an Android CI
+
+    It uses the following image:
+    https://phabricator.kde.org/source/sysadmin-ci-tooling/browse/master/system-images/android/sdk/Dockerfile-clang
+
+    The one we are using now as kdeorg/android-sdk is still using
+    GCC which
+    can't compile poppler master (it can compile last stable version, but
+    new features are used now and it can't cope).
+    KDE will start using this clang version when Qt 5.12 releases and we
+    know there's no major regressions, but poppler can already start doing
+    so now.
+
+    It only checks that poppler builds correctly, doesn't execute
+    anything.
+
+ .gitlab-ci.yml | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+commit 709f2e8d03e961e524f51312fff03b6e37854959
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sun Nov 18 13:03:55 2018 +0100
+
+    Regenerate UnicodeDecompTables.h from python 3.7.1
+
+    Supposedly more complete Unicode information
+
+ poppler/UnicodeDecompTables.h | 17870
+ +++++++++++++++++++++-------------------
+ 1 file changed, 9358 insertions(+), 8512 deletions(-)
+
+commit 7bb75cc533339a8480c16fe432ae4034b7ff5c57
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Mon Oct 22 00:26:40 2018 -0400
+
+    regtest: Fix file opened in wrong mode.
+
+ regtest/HTMLReport.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit d02d1a1e62a13ff357815f13379a00f34b957233
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 22:12:19 2018 -0400
+
+    regtest: Fix Printer.printerr.
+
+ regtest/Printer.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 1c3cc387a8d1686897801833ae1dd9493a48b708
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 22:05:10 2018 -0400
+
+    regtest: Replace execfile with plain read & exec.
+
+ regtest/Utils.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 60cf2c0fc385f2a8f60036136c957adf2193cdf9
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 21:58:20 2018 -0400
+
+    regtest: Enable new-style division everywhere.
+
+ regtest/Bisect.py                   |  2 +-
+ regtest/Config.py                   |  2 +-
+ regtest/HTMLReport.py               |  2 +-
+ regtest/InterruptibleQueue.py       |  2 +-
+ regtest/Printer.py                  |  2 +-
+ regtest/TestReferences.py           |  2 +-
+ regtest/TestRun.py                  | 12 ++++++++----
+ regtest/Timer.py                    |  2 +-
+ regtest/Utils.py                    |  2 +-
+ regtest/backends/__init__.py        |  2 +-
+ regtest/backends/cairo.py           |  2 +-
+ regtest/backends/postscript.py      |  2 +-
+ regtest/backends/splash.py          |  2 +-
+ regtest/backends/text.py            |  2 +-
+ regtest/builder/__init__.py         |  2 +-
+ regtest/builder/autotools.py        |  2 +-
+ regtest/commands/__init__.py        |  2 +-
+ regtest/commands/create-refs.py     |  2 +-
+ regtest/commands/create-report.py   |  2 +-
+ regtest/commands/find-regression.py |  2 +-
+ regtest/commands/run-tests.py       |  2 +-
+ regtest/main.py                     |  2 +-
+ 22 files changed, 29 insertions(+), 25 deletions(-)
+
+commit 5a266afcf314660a0bf8b3aeffb6308c1c66f805
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 21:54:09 2018 -0400
+
+    regtest: Enable absolute import on all files.
+
+ regtest/Bisect.py                   | 2 +-
+ regtest/Config.py                   | 2 +-
+ regtest/HTMLReport.py               | 2 +-
+ regtest/InterruptibleQueue.py       | 2 +-
+ regtest/Printer.py                  | 2 +-
+ regtest/TestReferences.py           | 2 +-
+ regtest/TestRun.py                  | 2 +-
+ regtest/Timer.py                    | 2 +-
+ regtest/Utils.py                    | 2 +-
+ regtest/backends/__init__.py        | 2 +-
+ regtest/backends/cairo.py           | 2 +-
+ regtest/backends/postscript.py      | 2 +-
+ regtest/backends/splash.py          | 2 +-
+ regtest/backends/text.py            | 2 +-
+ regtest/builder/__init__.py         | 2 +-
+ regtest/builder/autotools.py        | 2 +-
+ regtest/commands/__init__.py        | 2 +-
+ regtest/commands/create-refs.py     | 2 +-
+ regtest/commands/create-report.py   | 2 +-
+ regtest/commands/find-regression.py | 2 +-
+ regtest/commands/run-tests.py       | 2 +-
+ regtest/main.py                     | 2 +-
+ 22 files changed, 22 insertions(+), 22 deletions(-)
+
+commit 557423168289490ec9ddf1301924667c82cb3481
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 21:48:24 2018 -0400
+
+    regtest: Replace tabs with spaces.
+
+ regtest/TestRun.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0c744c934927ebe644215d23d06677fd670175c4
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 21:43:09 2018 -0400
+
+    regtest: Use print function everywhere.
+
+ regtest/Bisect.py                   | 1 +
+ regtest/Config.py                   | 1 +
+ regtest/HTMLReport.py               | 1 +
+ regtest/InterruptibleQueue.py       | 1 +
+ regtest/Printer.py                  | 1 +
+ regtest/TestReferences.py           | 1 +
+ regtest/TestRun.py                  | 1 +
+ regtest/Timer.py                    | 1 +
+ regtest/Utils.py                    | 1 +
+ regtest/backends/__init__.py        | 1 +
+ regtest/backends/cairo.py           | 1 +
+ regtest/backends/postscript.py      | 1 +
+ regtest/backends/splash.py          | 1 +
+ regtest/backends/text.py            | 1 +
+ regtest/builder/__init__.py         | 1 +
+ regtest/builder/autotools.py        | 1 +
+ regtest/commands/__init__.py        | 3 ++-
+ regtest/commands/create-refs.py     | 1 +
+ regtest/commands/create-report.py   | 1 +
+ regtest/commands/find-regression.py | 1 +
+ regtest/commands/run-tests.py       | 1 +
+ regtest/main.py                     | 1 +
+ 22 files changed, 23 insertions(+), 1 deletion(-)
+
+commit 0c02573f7c43a5b02b29daf8cb7f94d3925137a9
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 21:38:15 2018 -0400
+
+    regtest: Fix iteration through dictionary on Py3.
+
+ regtest/HTMLReport.py        | 6 +-----
+ regtest/commands/__init__.py | 3 +--
+ 2 files changed, 2 insertions(+), 7 deletions(-)
+
+commit 98a84ba86d5b675b4cd490455c5f5d644235b5c3
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 21:30:04 2018 -0400
+
+    regtest: Don't use exceptions for Printer singleton.
+
+    In Python 3, exceptions must derive from the BaseException class,
+    which
+    Printer definitely does not do.
+
+ regtest/Printer.py | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
+
+commit 6c427f7ecb97780ae3405be9ba6c7f0d9fe934dc
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Sun Oct 21 21:15:26 2018 -0400
+
+    Support Python 3 in scripts.
+
+ gtkdoc.py                     |  6 ++++-
+ poppler/gen-unicode-tables.py | 61
+ +++++++++++++++++++++++++++----------------
+ 2 files changed, 43 insertions(+), 24 deletions(-)
+
+commit a85c2ed8f4359341adb94887c4b551a761244fdb
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Nov 17 19:29:16 2018 +0100
+
+    Be more stubborn looking for a nssdb
+
+    Fixes issue #669
+
+ poppler/SignatureHandler.cc | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+commit 647a9813c41d936feea063f42060535464314ccc
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Fri Nov 16 23:14:13 2018 +0100
+
+    Save Object::copy on Page construction
+
+ poppler/Catalog.cc |  4 ++--
+ poppler/PDFDoc.cc  |  2 +-
+ poppler/Page.cc    | 16 ++++++++--------
+ poppler/Page.h     |  2 +-
+ 4 files changed, 12 insertions(+), 12 deletions(-)
+
+commit 8f158da92c53ae16a368f844965f57ba8ffed77d
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Fri Nov 16 21:36:33 2018 +0100
+
+    Make GooString constructible and assignable from null pointers again
+    since some of the code expects it.
+
+ goo/GooString.h               | 12 ++++++------
+ qt5/tests/check_goostring.cpp | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 6 deletions(-)
+
+commit e87818f7f9daff228fbc820aa78b3a08615e0826
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Fri Nov 16 17:12:24 2018 +0100
+
+    Two Object::copy calls less
+
+ poppler/Catalog.cc | 3 +--
+ poppler/Page.cc    | 6 +++---
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+commit 13708e8fd48b4ce72276a99f32d54a2b3b016897
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 14 14:53:04 2018 +0100
+
+    Annot: Remove some inc/defRef by Object moving
+
+ glib/poppler-action.cc |   2 +-
+ poppler/Annot.cc       | 200
+ ++++++++++++++++++++++++-------------------------
+ poppler/Annot.h        |  46 ++++++------
+ 3 files changed, 124 insertions(+), 124 deletions(-)
+
+commit aa864c8729595e64af136d181bfb581d80e03eb7
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 14 01:01:27 2018 +0100
+
+    Save an incRef/decRef when creating FormField
+
+ poppler/Form.cc | 38 +++++++++++++++++++-------------------
+ poppler/Form.h  | 12 ++++++------
+ 2 files changed, 25 insertions(+), 25 deletions(-)
+
+commit f846c9a2ccdd975ead3b8287cbac0064841ef360
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 14 15:26:47 2018 +0100
+
+    JBIG2Stream: Move Object instead of copying it
+
+ poppler/JBIG2Stream.cc | 6 +++---
+ poppler/JBIG2Stream.h  | 2 +-
+ poppler/Stream.cc      | 5 +++--
+ 3 files changed, 7 insertions(+), 6 deletions(-)
+
+commit 09952b05990a4c5bcd9763dd6701cefb13ab8e69
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 14 15:05:52 2018 +0100
+
+    AnnotFileAttachment::initialize: Save a Object::copy()
+
+ poppler/Annot.cc | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
+
+commit 20e8d51d6523ce6c92c1aab1b75d7c1bb64b441d
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 14 15:02:49 2018 +0100
+
+    Remove unused AnnotPopup::setParent
+
+ poppler/Annot.cc | 4 ----
+ poppler/Annot.h  | 1 -
+ 2 files changed, 5 deletions(-)
+
+commit 8d5931e6c585fcca27d127b0b804bc19d9188e49
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 14 14:58:41 2018 +0100
+
+    AnnotAppearance::getAppearanceStream: Save a copy() call
+
+ poppler/Annot.cc | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+commit c3a2c11a966a8e260a44716cbb0e26fa437b8f8d
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sun Oct 21 11:29:44 2018 +0200
+
+    Stream::makeFilter: Fix memory leak
+
+    fixes oss-fuzz/9614
+
+ poppler/Stream.cc | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
+
+commit d0ab87c1471349facd91caa65815670b1e3b7bb7
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Mon Nov 12 18:30:56 2018 +0100
+
+    Save an incRef/decRef when creating EmbFile
+
+ poppler/FileSpec.cc | 12 +++++-------
+ poppler/FileSpec.h  |  2 +-
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+commit 08d4f02cdfa0f5ab0eccbc476f623dd334ce6432
+Author: Tobias Deiminger <haxtibal@posteo.de>
+Date:   Mon Nov 12 19:13:04 2018 +0100
+
+    Fix parsing of line annotation LE values
+
+    AnnotLine::initialize used to look for strings, which is wrong,
+    because PDF reference says "LE [...] An array of two names".
+
+ poppler/Annot.cc | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+commit f1575bb7352eeaf26e6e1784c9bdff708c93280d
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sun Nov 11 23:17:46 2018 +0100
+
+    qt5: tests, go back to fromUt8, some tests failed on MSVC
+
+    And don't feel like investigating why
+
+ qt5/tests/check_password.cpp | 12 ++++++------
+ qt5/tests/check_search.cpp   | 24 ++++++++++++------------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
+
+commit 817b0f12453985c416a0388cdd4a09697d092b7f
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 9 18:42:04 2018 +0100
+
+    Rename GooString::getCString  GooString::c_str
+
+    This is the name used by std::string.
+
+ cpp/poppler-document.cpp            |   4 +-
+ cpp/poppler-embedded-file.cpp       |   6 +-
+ cpp/poppler-font.cpp                |   4 +-
+ cpp/poppler-page.cpp                |   2 +-
+ cpp/poppler-private.cpp             |   2 +-
+ fofi/FoFiTrueType.cc                |  48 +++++------
+ fofi/FoFiType1C.cc                  | 168
+ ++++++++++++++++++------------------
+ glib/poppler-action.cc              |  10 +--
+ glib/poppler-attachment.cc          |   2 +-
+ glib/poppler-document.cc            |  22 ++---
+ glib/poppler-media.cc               |   4 +-
+ glib/poppler-movie.cc               |   2 +-
+ glib/poppler-page.cc                |   4 +-
+ goo/GooString.cc                    |   2 +-
+ goo/GooString.h                     |   2 +-
+ goo/gfile.cc                        |  32 +++----
+ poppler/Annot.cc                    |  48 +++++------
+ poppler/CairoFontEngine.cc          |   4 +-
+ poppler/CairoOutputDev.cc           |   6 +-
+ poppler/Catalog.cc                  |   6 +-
+ poppler/CharCodeToUnicode.cc        |   6 +-
+ poppler/CurlCachedFile.cc           |   6 +-
+ poppler/DateInfo.cc                 |   2 +-
+ poppler/Decrypt.cc                  |  54 ++++++------
+ poppler/Error.cc                    |   6 +-
+ poppler/Form.cc                     |  20 ++---
+ poppler/Function.cc                 |   6 +-
+ poppler/Gfx.cc                      |  10 +--
+ poppler/GfxFont.cc                  |  12 +--
+ poppler/GfxState.cc                 |   8 +-
+ poppler/GlobalParams.cc             |  58 ++++++-------
+ poppler/GlobalParamsWin.cc          |  28 +++---
+ poppler/Lexer.cc                    |   2 +-
+ poppler/Link.cc                     |   8 +-
+ poppler/LocalPDFDocBuilder.cc       |   2 +-
+ poppler/Object.cc                   |   2 +-
+ poppler/PDFDoc.cc                   |  32 +++----
+ poppler/PSOutputDev.cc              |  90 +++++++++----------
+ poppler/PageLabelInfo.cc            |   4 +-
+ poppler/Parser.cc                   |   2 +-
+ poppler/SignatureHandler.cc         |   4 +-
+ poppler/SplashOutputDev.cc          |  22 ++---
+ poppler/StructElement.cc            |   4 +-
+ poppler/StructElement.h             |   2 +-
+ poppler/TextOutputDev.cc            |   6 +-
+ poppler/UTF.cc                      |   2 +-
+ qt5/src/ArthurOutputDev.cc          |  24 +++---
+ qt5/src/poppler-annotation-helper.h |   4 +-
+ qt5/src/poppler-annotation.cc       |  14 +--
+ qt5/src/poppler-document.cc         |   4 +-
+ qt5/src/poppler-embeddedfile.cc     |   8 +-
+ qt5/src/poppler-form.cc             |   6 +-
+ qt5/src/poppler-link.cc             |   2 +-
+ qt5/src/poppler-movie.cc            |   2 +-
+ qt5/src/poppler-page.cc             |  10 +--
+ qt5/src/poppler-private.cc          |  12 +--
+ qt5/src/poppler-private.h           |   4 +-
+ qt5/src/poppler-sound.cc            |   2 +-
+ qt5/tests/check_annotations.cpp     |   2 +-
+ qt5/tests/check_goostring.cpp       |  36 ++++----
+ qt5/tests/check_pagelabelinfo.cpp   |  10 +--
+ qt5/tests/check_strings.cpp         |   4 +-
+ splash/SplashBitmap.cc              |   2 +-
+ splash/SplashFTFontEngine.cc        |   4 +-
+ splash/SplashFTFontFile.cc          |   6 +-
+ splash/SplashFontFile.cc            |   2 +-
+ test/perf-test.cc                   |   2 +-
+ utils/HtmlFonts.cc                  |   8 +-
+ utils/HtmlFonts.h                   |   2 +-
+ utils/HtmlLinks.cc                  |   2 +-
+ utils/HtmlOutputDev.cc              | 110 +++++++++++------------
+ utils/HtmlOutputDev.h               |   2 +-
+ utils/JSInfo.cc                     |   8 +-
+ utils/pdffonts.cc                   |  10 +--
+ utils/pdfinfo.cc                    |  28 +++---
+ utils/pdfsig.cc                     |  14 +--
+ utils/pdftocairo-win32.cc           |  22 ++---
+ utils/pdftocairo.cc                 |  44 +++++-----
+ utils/pdftohtml.cc                  |  30 +++----
+ utils/pdftoppm.cc                   |  14 +--
+ utils/pdftops.cc                    |   6 +-
+ utils/pdftotext.cc                  |  16 ++--
+ utils/pdfunite.cc                   |  10 +--
+ utils/printencodings.cc             |   2 +-
+ 84 files changed, 632 insertions(+), 632 deletions(-)
+
+commit fb7f34b1f9706c4912384eabd5dbf44b6c88c71d
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sun Nov 11 22:59:48 2018 +0100
+
+    Update (C) of last commits
+
+ poppler/GfxState_helpers.h          | 2 +-
+ qt5/src/poppler-annotation-helper.h | 2 +-
+ qt5/src/poppler-annotation.h        | 2 +-
+ qt5/src/poppler-link.h              | 2 +-
+ splash/SplashScreen.cc              | 2 +-
+ splash/SplashXPathScanner.cc        | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 49d5b1b663faa883e774ec7e72ae211fcc625873
+Author: Tobias Deiminger <haxtibal@posteo.de>
+Date:   Fri Nov 2 20:17:04 2018 +0100
+
+    Draw line annotation endings (arrow, circle, ...)
+
+    Line endings are already parsed from /LE array and are gettable and
+    settable as enum value in current APIs.
+
+    With this commit we implement the drawing operations so that line
+    endings become actually visible when document is rendered.
+
+ poppler/Annot.cc | 174
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ poppler/Annot.h  |  10 +++-
+ 2 files changed, 179 insertions(+), 5 deletions(-)
+
+commit c7161f7127644b2f85e7ef067a4929beeb1a71cb
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Nov 8 23:28:44 2018 +0100
+
+    Add a clazy -Werror CI
+
+    Enables levels 0, 1 and 2, along with some manual ones
+    Disables non-pod-globa-static, StructElement would need some rework to
+    fix it and it's only a bit about optimization of start time, we
+    can live
+    with it
+
+ .gitlab-ci.yml | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 28e953cbab0059dff76c9cfa35c4522709968b0e
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 7 19:22:49 2018 +0100
+
+    Minor clazy Qt fixes in tests and demo
+
+ qt5/demos/abstractinfodock.cpp     |  2 +-
+ qt5/demos/embeddedfiles.cpp        |  2 +-
+ qt5/demos/fonts.cpp                |  4 +-
+ qt5/demos/info.cpp                 |  4 +-
+ qt5/demos/navigationtoolbar.cpp    |  9 ++--
+ qt5/demos/optcontent.cpp           |  2 +-
+ qt5/demos/pageview.h               |  2 +-
+ qt5/demos/permissions.cpp          |  2 +-
+ qt5/demos/thumbnails.cpp           |  4 +-
+ qt5/demos/toc.cpp                  |  4 +-
+ qt5/demos/viewer.cpp               | 34 ++++++++------
+ qt5/demos/viewer.h                 |  2 +-
+ qt5/tests/check_actualtext.cpp     |  4 +-
+ qt5/tests/check_annotations.cpp    |  6 ++-
+ qt5/tests/check_attachments.cpp    | 24 +++++-----
+ qt5/tests/check_dateConversion.cpp |  3 ++
+ qt5/tests/check_fonts.cpp          | 22 +++++----
+ qt5/tests/check_forms.cpp          |  2 +
+ qt5/tests/check_goostring.cpp      |  8 ++--
+ qt5/tests/check_lexer.cpp          |  2 +
+ qt5/tests/check_links.cpp          | 14 +++---
+ qt5/tests/check_metadata.cpp       | 10 ++--
+ qt5/tests/check_object.cpp         |  2 +
+ qt5/tests/check_optcontent.cpp     | 42 +++++++++--------
+ qt5/tests/check_pagelabelinfo.cpp  |  2 +
+ qt5/tests/check_pagelayout.cpp     |  2 +
+ qt5/tests/check_pagemode.cpp       |  2 +
+ qt5/tests/check_password.cpp       | 12 +++--
+ qt5/tests/check_permissions.cpp    |  2 +
+ qt5/tests/check_search.cpp         | 94
+ +++++++++++++++++++-------------------
+ qt5/tests/check_strings.cpp        | 57 ++++++++++++-----------
+ qt5/tests/check_utf_conversion.cpp | 26 ++++++-----
+ qt5/tests/poppler-fonts.cpp        |  6 +--
+ qt5/tests/poppler-forms.cpp        |  2 +-
+ qt5/tests/stress-poppler-dir.cpp   | 18 ++++----
+ qt5/tests/stress-poppler-qt5.cpp   | 23 +++++-----
+ qt5/tests/stress-threads-qt5.cpp   | 20 ++++----
+ qt5/tests/test-password-qt5.cpp    | 33 +++++++------
+ qt5/tests/test-poppler-qt5.cpp     | 33 +++++++------
+ qt5/tests/test-render-to-file.cpp  |  6 +--
+ 40 files changed, 304 insertions(+), 244 deletions(-)
+
+commit 74ad4e3570f31afcb7e6e00e0d9cf2c53c3db6eb
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 7 15:52:00 2018 +0100
+
+    char * -> QStringLiteral
+
+ qt5/src/poppler-private.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 82b91c56d1a89c29108bf03b07e751b54b589446
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 7 15:48:39 2018 +0100
+
+    exclude some function-args-by-value and function-args-by-ref
+
+    Since they are part of the API
+
+ qt5/src/poppler-annotation.cc      | 2 +-
+ qt5/src/poppler-annotation.h       | 1 +
+ qt5/src/poppler-link.cc            | 2 +-
+ qt5/src/poppler-link.h             | 1 +
+ qt5/src/poppler-page-transition.cc | 2 +-
+ qt5/src/poppler-page-transition.h  | 1 +
+ 6 files changed, 6 insertions(+), 3 deletions(-)
+
+commit 1ac74b477748c86263c737c6f1b3ac71fb4808bc
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 7 15:34:20 2018 +0100
+
+    Pass small and trivially-copyable type by value
+
+ fofi/FoFiTrueType.cc                |  4 ++--
+ poppler/Form.cc                     | 12 ++++++------
+ poppler/Form.h                      | 12 ++++++------
+ poppler/GfxFont.cc                  |  4 ++--
+ poppler/GfxState_helpers.h          |  2 +-
+ poppler/MarkedContentOutputDev.h    |  2 +-
+ poppler/Object.h                    |  6 +++---
+ poppler/OptionalContent.cc          |  2 +-
+ poppler/OptionalContent.h           |  2 +-
+ poppler/StructElement.cc            |  2 +-
+ poppler/StructElement.h             |  4 ++--
+ poppler/StructTreeRoot.cc           |  2 +-
+ poppler/StructTreeRoot.h            |  2 +-
+ qt5/src/poppler-annotation-helper.h |  4 ++--
+ qt5/src/poppler-link.cc             | 12 ++++++------
+ qt5/src/poppler-link.h              |  4 ++--
+ splash/SplashScreen.cc              |  2 +-
+ splash/SplashXPathScanner.cc        |  2 +-
+ 18 files changed, 40 insertions(+), 40 deletions(-)
+
+commit e69cd723679c4732d07dec13c60af800ba9c0e0a
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 7 15:28:48 2018 +0100
+
+    No need to store to a QImage variable to not use it later
+
+    Makes clazy happier
+
+ qt5/tests/stress-poppler-dir.cpp | 2 +-
+ qt5/tests/stress-poppler-qt5.cpp | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 8969d8786e95cb86f20adfbc876466eddb1028e7
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Fri Nov 9 01:20:37 2018 +0100
+
+    NULL -> nullptr
+
+ glib/poppler-form-field.cc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 54d003599920276710e7532b2250b302b459e2a4
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Nov 8 23:12:15 2018 +0100
+
+    qt5: Add -DQT_NO_SIGNALS_SLOTS_KEYWORDS
+
+    We don't have any signals or slots at the moment but add the
+    keyword so
+    if we ever add them it's using the Q_SIGNAL/Q_SLOT variant so we don't
+    get collisions with other people that use signal/slot
+
+ qt5/src/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 178fdef48c18dfdb2f1efea780ffd320631defcd
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Nov 3 21:04:52 2018 +0100
+
+    Rework Parser::makeStream "entry" variable handling
+
+    Scopes the entry variable so people don't try to use it in between
+
+ poppler/Parser.cc | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
+
+commit 426834dbf1c0981593773697a2c47308ecc38593
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Nov 7 15:26:56 2018 +0100
+
+    NULL -> nullptr
+
+ glib/poppler-attachment.cc | 2 +-
+ glib/poppler-document.cc   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit b8cae8886a2894502dc12ceba63f2aab62ab3992
+Author: Albert Astals Cid <tsdgeos@yahoo.es>
+Date:   Tue Nov 6 22:11:28 2018 +0000
+
+    Update since to 0.72
+
+ glib/poppler-form-field.cc | 2 +-
+ glib/poppler-form-field.h  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d09f763b3ea5581f7819b46b659f3d9b1b5fd78c
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Thu Nov 7 00:51:11 2013 -0500
+
+    glib: Support getting form widget additional actions.
+
+ glib/demo/forms.c          | 40 ++++++++++++++++++++++++++++++++
+ glib/poppler-form-field.cc | 57
+ ++++++++++++++++++++++++++++++++++++++++++++++
+ glib/poppler-form-field.h  | 24 +++++++++++++++++++
+ glib/poppler-private.h     |  4 ++++
+ 4 files changed, 125 insertions(+)
+
+commit ee6166ab599c3d5f694191707c366653afa7b0d3
+Author: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date:   Thu Nov 7 00:50:38 2013 -0500
+
+    glib-demo: Fix indent for actions code.
+
+ glib/demo/forms.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+commit 744a3491675f22e36a5fba38f58bb90ec7291884
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Tue Nov 6 19:28:22 2018 +0100
+
+    Update (C)
+
+ poppler/FileSpec.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit d2f5d424ba8752f9a9e9dad410546ec1b46caa0a
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Tue Nov 6 09:08:06 2018 +0100
+
+    pdfdetach: Check for valid file name of embedded file before using
+    it to determine save path.
+
+    Closes #660
+
+ utils/pdfdetach.cc | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+commit 77a30e94d96220d7e22dff5b3f0a7f296f01b118
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Tue Nov 6 09:13:41 2018 +0100
+
+    pdfdetach: Check for valid embedded file before trying to save it.
+
+    Closes #661
+
+ utils/pdfdetach.cc | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+commit 6912e06d9ab19ba28991b5cab3319d61d856bd6d
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Tue Nov 6 09:00:02 2018 +0100
+
+    Check for stream before calling stream methods when saving an
+    embedded file.
+
+    Closes #659
+
+ poppler/FileSpec.cc | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 6ced3253fa3356e50d6c1dfa8961561eabefb9e8
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Tue Oct 23 23:42:47 2018 +0200
+
+    glib: Fix missing destructor call
+
+    PopplerAttachmentPrivate has a Object member which
+    was never destructed, only set to an empty Object()
+    on dispose. While there is no memory leak (currently!),
+    this is still not correct.
+
+    Fix this by making  PopplerAttachmentPrivate a C++ class,
+    constructed in place of the gobject instance private in
+    init(), and call the destructor explicitly in finalize().
+
+ glib/poppler-attachment.cc | 28 +++++++++++-----------------
+ 1 file changed, 11 insertions(+), 17 deletions(-)
+
+commit 08572e1bdca03baed694dd9828bb2b878865e669
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Nov 3 12:21:41 2018 +0100
+
+    Parser::makeStream: Fix crash on malformed files
+
+    fixes oss-fuzz/11244
+
+ poppler/Parser.cc | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 89fccf45fc5bfca3756102e6bec1950ec1d436a9
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Nov 3 01:45:55 2018 +0100
+
+    initialize entry
+
+ poppler/Parser.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 2cd0ded91ad25a655ddd0c3ff14bc8c25c4eb410
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Nov 3 01:43:30 2018 +0100
+
+    Update (C)
+
+ poppler/Parser.cc | 1 +
+ poppler/XRef.h    | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 3d35d209c19c1d3b09b794a0c863ba5de44a9c0a
+Author: Marek Kasik <mkasik@redhat.com>
+Date:   Mon Oct 29 17:44:47 2018 +0100
+
+    Avoid cycles in PDF parsing
+
+    Mark objects being processed in Parser::makeStream() as being
+    processed
+    and check the mark when entering this method to avoid processing
+    of the same object recursively.
+
+ poppler/Parser.cc | 15 +++++++++++++++
+ poppler/XRef.h    |  1 +
+ 2 files changed, 16 insertions(+)
+
+commit 0c2cfbf9ca0b1d1c9a4fec9417035350753528f4
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Fri Nov 2 22:44:23 2018 +0100
+
+    Update (C)
+
+ poppler/Form.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 91fa06ee9279c8ec9569f06c7ec871dd592c49e5
+Author: Nelson Benítez León <nbenitezl@gmail.com>
+Date:   Mon Oct 29 22:48:08 2018 +0500
+
+    Form.cc: fix checkbox lacking /AP cannot change state
+
+    When a checkbox had no /AP key (which is not mandatory)
+    poppler was silently ignoring the setState() call that
+    changes the checked/unchecked state.
+
+    Fixed by using getOnStr() instead of accessing onStr
+    directly, as the former has code in place to return
+    correct values when the field is a checkbox and has
+    no names for the On/Off states (as a result of not
+    having the /AP key which could contain those names).
+
+    A testcase is included. An example definition of an
+    affected checkbox follows:
+
+    /F 4
+    /FT /Btn
+    /H /P
+    /MK /BC [1,0,0] /BG [1,1,1] /CA (4)
+    /Q 0
+    /Rect [235.277,654.247,249.224,668.194]
+    /Subtype /Widget
+    /T (basiccheckbox)
+    /Type /Annot
+    /V /Off
+
+    Fixes issue #655
+
+ poppler/Form.cc           |  6 +++---
+ qt5/tests/CMakeLists.txt  |  1 +
+ qt5/tests/check_forms.cpp | 43
+ +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 47 insertions(+), 3 deletions(-)
+
+commit b645e64e906b4b8930cd380cc95b6d6777b96003
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Nov 1 23:18:18 2018 +0100
+
+    Update (C)
+
+ poppler/CairoOutputDev.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 52db12dd06fac5cfe9010c1f18ef719f2c6c3df2
+Author: Adrian Johnson <ajohnson@redneon.com>
+Date:   Sun Oct 14 07:57:34 2018 +0000
+
+    cairo: Update comment
+
+ poppler/CairoOutputDev.cc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit cb307609b79187b72f5239330bf7f448d7101678
+Author: Adrian Johnson <ajohnson@redneon.com>
+Date:   Thu Oct 11 08:42:14 2018 +0000
+
+    cairo: Don't use UNIQUE_ID for PS output
+
+    to avoid using PS memory on cairo >= 1.5.10
+
+ poppler/CairoOutputDev.cc | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+commit 5d1e0a3576cd05565988ec697905924948727a87
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Nov 1 12:00:13 2018 +0100
+
+    Workaround debian unstable not wanting to install libc++-dev
+
+ .gitlab-ci.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit ce774021d8330814f10d80b060b2870db5860641
 Author: Albert Astals Cid <aacid@kde.org>
 Date:   Wed Oct 31 22:13:17 2018 +0100
