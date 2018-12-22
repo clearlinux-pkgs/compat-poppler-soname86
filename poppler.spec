@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.72.0
-Release  : 27
+Release  : 28
 URL      : https://poppler.freedesktop.org/poppler-0.72.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.72.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.72.0.tar.xz.sig
@@ -133,7 +133,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545268984
+export SOURCE_DATE_EPOCH=1545497073
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -141,7 +141,7 @@ export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-i
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %cmake .. -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 mkdir -p clr-build-avx2
 pushd clr-build-avx2
@@ -152,11 +152,11 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semanti
 export CFLAGS="$CFLAGS -march=haswell -m64"
 export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
 %cmake .. -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1545268984
+export SOURCE_DATE_EPOCH=1545497073
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -206,17 +206,8 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-%exclude /usr/include/poppler/qt5/poppler-annotation.h
-%exclude /usr/include/poppler/qt5/poppler-export.h
-%exclude /usr/include/poppler/qt5/poppler-form.h
-%exclude /usr/include/poppler/qt5/poppler-link.h
-%exclude /usr/include/poppler/qt5/poppler-media.h
-%exclude /usr/include/poppler/qt5/poppler-optcontent.h
-%exclude /usr/include/poppler/qt5/poppler-page-transition.h
-%exclude /usr/include/poppler/qt5/poppler-qt5.h
 %exclude /usr/lib64/haswell/libpoppler-qt5.so
 %exclude /usr/lib64/libpoppler-qt5.so
-%exclude /usr/lib64/pkgconfig/poppler-qt5.pc
 /usr/include/poppler/Annot.h
 /usr/include/poppler/Array.h
 /usr/include/poppler/BuiltinFont.h
@@ -342,6 +333,14 @@ popd
 /usr/include/poppler/goo/gstrtod.h
 /usr/include/poppler/goo/gtypes.h
 /usr/include/poppler/poppler-config.h
+/usr/include/poppler/qt5/poppler-annotation.h
+/usr/include/poppler/qt5/poppler-export.h
+/usr/include/poppler/qt5/poppler-form.h
+/usr/include/poppler/qt5/poppler-link.h
+/usr/include/poppler/qt5/poppler-media.h
+/usr/include/poppler/qt5/poppler-optcontent.h
+/usr/include/poppler/qt5/poppler-page-transition.h
+/usr/include/poppler/qt5/poppler-qt5.h
 /usr/include/poppler/splash/Splash.h
 /usr/include/poppler/splash/SplashBitmap.h
 /usr/include/poppler/splash/SplashClip.h
@@ -371,26 +370,18 @@ popd
 /usr/lib64/pkgconfig/poppler-cairo.pc
 /usr/lib64/pkgconfig/poppler-cpp.pc
 /usr/lib64/pkgconfig/poppler-glib.pc
+/usr/lib64/pkgconfig/poppler-qt5.pc
 /usr/lib64/pkgconfig/poppler-splash.pc
 /usr/lib64/pkgconfig/poppler.pc
 
 %files extras
 %defattr(-,root,root,-)
-/usr/include/poppler/qt5/poppler-annotation.h
-/usr/include/poppler/qt5/poppler-export.h
-/usr/include/poppler/qt5/poppler-form.h
-/usr/include/poppler/qt5/poppler-link.h
-/usr/include/poppler/qt5/poppler-media.h
-/usr/include/poppler/qt5/poppler-optcontent.h
-/usr/include/poppler/qt5/poppler-page-transition.h
-/usr/include/poppler/qt5/poppler-qt5.h
 /usr/lib64/haswell/libpoppler-qt5.so
 /usr/lib64/haswell/libpoppler-qt5.so.1
 /usr/lib64/haswell/libpoppler-qt5.so.1.17.0
 /usr/lib64/libpoppler-qt5.so
 /usr/lib64/libpoppler-qt5.so.1
 /usr/lib64/libpoppler-qt5.so.1.17.0
-/usr/lib64/pkgconfig/poppler-qt5.pc
 
 %files lib
 %defattr(-,root,root,-)
