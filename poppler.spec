@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.72.0
-Release  : 28
+Release  : 29
 URL      : https://poppler.freedesktop.org/poppler-0.72.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.72.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.72.0.tar.xz.sig
@@ -40,6 +40,9 @@ BuildRequires : pkgconfig(nss)
 BuildRequires : qtbase-extras
 BuildRequires : tiff-dev
 BuildRequires : zlib-dev
+Patch1: CVE-2018-20481.patch
+Patch2: CVE-2018-20551.patch
+Patch3: CVE-2018-20650.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -124,6 +127,9 @@ man components for the poppler package.
 
 %prep
 %setup -q -n poppler-0.72.0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 pushd ..
 cp -a poppler-0.72.0 buildavx2
 popd
@@ -133,7 +139,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545497073
+export SOURCE_DATE_EPOCH=1546561118
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -141,7 +147,7 @@ export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-i
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %cmake .. -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 mkdir -p clr-build-avx2
 pushd clr-build-avx2
@@ -152,11 +158,11 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semanti
 export CFLAGS="$CFLAGS -march=haswell -m64"
 export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
 %cmake .. -DENABLE_XPDF_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1545497073
+export SOURCE_DATE_EPOCH=1546561118
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
