@@ -1,3 +1,1068 @@
+commit 67e46f6e1339f830f9f8b6fd27e38708b4cf4b0e
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Mon Jan 7 22:15:12 2019 +0100
+
+    Poppler 0.73.0
+
+ CMakeLists.txt         |  4 ++--
+ NEWS                   | 32 ++++++++++++++++++++++++++++++++
+ cpp/CMakeLists.txt     |  2 +-
+ cpp/Doxyfile           |  2 +-
+ glib/CMakeLists.txt    |  2 +-
+ qt5/src/CMakeLists.txt |  2 +-
+ qt5/src/Doxyfile       |  2 +-
+ 7 files changed, 39 insertions(+), 7 deletions(-)
+
+commit 75f3d31daa050ca822d2ab501cdeca748ddf9d54
+Author: Marek Kasik <mkasik@redhat.com>
+Date:   Wed Jan 2 14:55:41 2019 +0100
+
+    glib: Make PrintScaling preference available in API
+
+    Add poppler_document_get_print_scaling() function and
+    PopplerPrintScaling enum so that applications which
+    use poppler's glib frontend can access this preference.
+
+    https://bugs.freedesktop.org/show_bug.cgi?id=92779
+
+ glib/poppler-document.cc            | 60
+ ++++++++++++++++++++++++++++++++++++-
+ glib/poppler-document.h             | 17 +++++++++++
+ glib/reference/poppler-sections.txt |  3 ++
+ glib/reference/poppler.types        |  1 +
+ 4 files changed, 80 insertions(+), 1 deletion(-)
+
+commit 44505cb397c46baa7dd4a0456f737f36e6d19ad0
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Tue Jan 1 18:16:18 2019 +0100
+
+    glib: Fix named destinations
+
+    Named destinations may be described by bytestrings, containing
+    embedded NULs and not being NUL terminated. That means they cannot
+    be exposed directly as char*.
+
+    The alternatives are to escape the string from the internal
+    representation
+    when exposing it in the API (e.g. in PopplerDest.named_dest), or to
+    add parallel API exposing it as GString, or GBytes. This patch chooses
+    the first option, since the presence of these named destionations
+    in the
+    public, not sealed, PopplerDest struct means that the second option
+    would
+    need more API additions. The chosen option is simpler, and does not
+    need the API users to adapt unless they create the named dest strings
+    themselves, or consume them in ways other than calling poppler APIs.
+
+    The escaping scheme chosen simply replaces embedded NUL with "\0" and
+    escapes a literal backslash with "\\".  This is a minimal ABI
+    change in
+    that some strings that previously worked unchanged as destinations
+    (those containing backslash) now don't work, but on the other hand,
+    previously it was impossible to use any destinations containing
+    embedded
+    NULs.
+
+    Add poppler_named_dest_{from,to}_bytestring() to perform that
+    conversion, and clarify the documentation for when you need them.
+
+    Based on a patch by José Aliste <jaliste@src.gnome.org>.
+
+    https://gitlab.freedesktop.org/poppler/poppler/issues/631
+
+ glib/demo/utils.c                   |   2 -
+ glib/poppler-action.cc              |   5 +-
+ glib/poppler-action.h               |  16 ++++
+ glib/poppler-document.cc            | 151
+ +++++++++++++++++++++++++++++++-----
+ glib/reference/poppler-sections.txt |   2 +
+ 5 files changed, 154 insertions(+), 22 deletions(-)
+
+commit 5196cf634cddabde8963306ab99f86c3840fbbbb
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Jan 5 20:11:22 2019 +0100
+
+    qt5: Remove CertificateInfo()
+
+    This is BC because the version with it was never released
+
+    People will shoot themselves on the foot and we don't need it
+
+ qt5/src/poppler-form.cc | 94
+ ++++++++++++++++++++++++-------------------------
+ qt5/src/poppler-form.h  |  3 +-
+ 2 files changed, 48 insertions(+), 49 deletions(-)
+
+commit 8e8c8417a724b3d12e310f9858d0bf02f1b49c7e
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Jan 5 19:48:41 2019 +0100
+
+    Remove unneeded/leaky copyString calls
+
+    the left hand is a std::string
+
+ poppler/SignatureHandler.cc | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 7fde94de5bc8bcb83f347663abf4dd056a03837e
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Sat Oct 27 21:21:31 2018 +0200
+
+    Make CertificateInfo a std::unique_ptr
+
+ poppler/SignatureHandler.cc | 4 ++--
+ poppler/SignatureHandler.h  | 2 +-
+ poppler/SignatureInfo.cc    | 8 +++-----
+ poppler/SignatureInfo.h     | 5 +++--
+ 4 files changed, 9 insertions(+), 10 deletions(-)
+
+commit 8943f7de0125152f20a64b8092ed516e08e6c1d9
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Sat Oct 27 21:09:29 2018 +0200
+
+    Use std::string for the strings in EntityInfo
+
+ poppler/CertificateInfo.cc | 45
+ ++++-----------------------------------------
+ poppler/CertificateInfo.h  |  8 ++++----
+ qt5/src/poppler-form.cc    | 16 ++++++++--------
+ 3 files changed, 16 insertions(+), 53 deletions(-)
+
+commit 0d3c6b4010629d92e7aee1a7486085d9e0ca711c
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Sat Oct 27 20:42:44 2018 +0200
+
+    Use GooString for publicKey, cert_serial, cert_der
+
+ poppler/CertificateInfo.cc  | 35 +++++++++--------------------------
+ poppler/CertificateInfo.h   | 12 ++++++------
+ poppler/SignatureHandler.cc |  4 ++--
+ qt5/src/poppler-form.cc     |  2 +-
+ 4 files changed, 18 insertions(+), 35 deletions(-)
+
+commit 119554432264010850250344c8c087c9f31216dc
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Oct 26 21:02:56 2018 +0200
+
+    Lots of changes to CertificateInfo memory handling
+
+ poppler/CertificateInfo.cc  | 131
+ ++++++++++++++++++++++++++++++++++----------
+ poppler/CertificateInfo.h   |  39 ++++++++++---
+ poppler/Form.cc             |   2 +-
+ poppler/SignatureHandler.cc |  44 +++++++--------
+ poppler/SignatureHandler.h  |   8 +--
+ poppler/SignatureInfo.cc    |   4 +-
+ poppler/SignatureInfo.h     |   3 +-
+ qt5/src/poppler-form.cc     |  38 ++++++++-----
+ qt5/src/poppler-form.h      |  19 ++++---
+ 9 files changed, 195 insertions(+), 93 deletions(-)
+
+commit 0e2577ec4c3d08eac0b02a3e941d51082b2754c0
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Oct 25 21:49:12 2018 +0200
+
+    delete copy constructor and assignement
+
+ poppler/CertificateInfo.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 5a12875cec4d544ea1ca2838fcf407bc2888dd10
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Oct 25 21:38:44 2018 +0200
+
+    Install the header file CertificateInfo.h
+
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 5d6e6f3d4ead5f098be84fffab5cc7d4bdefe38a
+Author: Chinmoy Ranjan Pradhan <chinmoyrp65@gmail.com>
+Date:   Tue Jul 17 17:47:34 2018 +0000
+
+    Expose X509CertificateInfo in qt5 frontend
+
+ qt5/src/poppler-form.cc | 222
+ ++++++++++++++++++++++++++++++++++++++++++++++++
+ qt5/src/poppler-form.h  | 133 +++++++++++++++++++++++++++++
+ 2 files changed, 355 insertions(+)
+
+commit a6944a73286032c2c434f78325531cdf9d3a0de2
+Author: Chinmoy Ranjan Pradhan <chinmoyrp65@gmail.com>
+Date:   Tue Jul 17 18:18:30 2018 +0000
+
+    Add X509CertificateInfo to poppler
+
+ CMakeLists.txt              |   1 +
+ poppler/CertificateInfo.cc  | 127
+ ++++++++++++++++++++++++++++++++++++++++++++
+ poppler/CertificateInfo.h   |  98 ++++++++++++++++++++++++++++++++++
+ poppler/Form.cc             |   1 +
+ poppler/SignatureHandler.cc | 114 +++++++++++++++++++++++++++++++++++++--
+ poppler/SignatureHandler.h  |   5 ++
+ poppler/SignatureInfo.cc    |  14 +++++
+ poppler/SignatureInfo.h     |   5 ++
+ 8 files changed, 361 insertions(+), 4 deletions(-)
+
+commit aed1af47a2f1adde4e47836798346674f84b873a
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Jan 5 23:50:24 2019 +0100
+
+    gfile: Fix the build on WIN32
+
+    The openFileDescriptor function is not user in the WIN32 codepaths,
+    so just #ifdef it out on WIN32.
+
+ goo/gfile.cc | 4 ++++
+ goo/gfile.h  | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+commit 01e963c4f89f47a883c27c597cdf7bf361e8f1ce
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Jan 5 18:12:42 2019 +0100
+
+    qt5: undefine major and minor since old glibc defined them
+
+ qt5/src/poppler-version.h.in | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit 0e8effb2c5143548f4245300840a510eaf94f9e7
+Author: Alexey Pavlov <alexpux@gmail.com>
+Date:   Mon Dec 10 12:03:48 2018 +0100
+
+    msys2: add missing include on mingw-w64
+
+ utils/pdfsig.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 12cf140b0e3b241788b6dfd65129d9bb028bef9c
+Author: Alexey Pavlov <alexpux@gmail.com>
+Date:   Mon Dec 10 01:07:07 2018 +0100
+
+    msys2: fix glib introspection path on mingw-w64
+
+ glib/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 859b4e54c8a6af13eb4715076dc90a17bb2b71df
+Author: Alexey Pavlov <alexpux@gmail.com>
+Date:   Mon Dec 10 01:06:18 2018 +0100
+
+    msys2: support enabling NSS on mingw-w64
+
+ cmake/modules/FindNSS3.cmake | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 2cebd37e2910a7edacb19c32b82d8b8f7cfe41d6
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Jan 5 17:31:00 2019 +0100
+
+    Update (C) of previous commits
+
+ fofi/FoFiBase.cc           | 1 +
+ fofi/FoFiIdentifier.cc     | 1 +
+ goo/gfile.cc               | 1 +
+ goo/gfile.h                | 1 +
+ poppler/CairoFontEngine.cc | 1 +
+ poppler/FileSpec.cc        | 1 +
+ poppler/GfxState.cc        | 2 +-
+ poppler/GlobalParams.cc    | 1 +
+ poppler/GlobalParamsWin.cc | 1 +
+ poppler/PDFDoc.cc          | 1 +
+ poppler/PSOutputDev.cc     | 1 +
+ poppler/TextOutputDev.cc   | 1 +
+ splash/SplashBitmap.cc     | 1 +
+ 13 files changed, 13 insertions(+), 1 deletion(-)
+
+commit d5625de8ce3fc31608248fe14b12c4c7d1a43593
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Jan 3 21:11:49 2019 +0100
+
+    gfile: Open files with CLOEXEC flag set
+
+    First try to atomically open the file using O_CLOEXEC for open()
+    and the "e" mode for fopen(), and if that doesn't work or O_CLOEXEC
+    isn't defined, fall back to opening the file first and applying
+    the FD_CLOEXEC flag afterwards.
+
+ goo/gfile.cc | 47 +++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 45 insertions(+), 2 deletions(-)
+
+commit 4a3eef323d72b06780c318f58917f884eecc812e
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Jan 3 21:11:49 2019 +0100
+
+    gfile: Add wrapper for open(3p) and use it instead of directly
+    calling open
+
+    This is in preparation to making the wrapper enforce the O_CLOEXEC
+    flag.
+
+ goo/gfile.cc               | 6 +++++-
+ goo/gfile.h                | 3 +++
+ poppler/CairoFontEngine.cc | 2 +-
+ 3 files changed, 9 insertions(+), 2 deletions(-)
+
+commit e1e4457a235f6107c09d32994fc628efa9e7bd0e
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Jan 3 21:11:49 2019 +0100
+
+    all: Use the openFile fopen wrapper from gfile.h
+
+    Use the openFile wrapper instead of calling fopen directly
+    in the libraries.
+
+ fofi/FoFiBase.cc           | 3 ++-
+ fofi/FoFiIdentifier.cc     | 3 ++-
+ glib/poppler-attachment.cc | 5 +++--
+ glib/poppler-media.cc      | 5 +++--
+ poppler/FileSpec.cc        | 3 ++-
+ poppler/GfxState.cc        | 5 +++--
+ poppler/GlobalParams.cc    | 4 ++--
+ poppler/GlobalParamsWin.cc | 2 +-
+ poppler/PDFDoc.cc          | 6 +++---
+ poppler/PSOutputDev.cc     | 4 ++--
+ poppler/TextOutputDev.cc   | 3 ++-
+ splash/SplashBitmap.cc     | 7 ++++---
+ 12 files changed, 29 insertions(+), 21 deletions(-)
+
+commit 1e99a1eeb3a144facf45165df9f457796c045daa
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Jan 3 19:47:10 2019 +0100
+
+    Revert 9fd5ec0e6e5f763b190f2a55ceb5427cfe851d5f
+
+    It was causing regressions for some half-broken files
+
+    Rationale:
+
+    Even if xref::constructXRef is returning false, that only means "i
+    din't find a new xref root", but constructXRef is also quite
+    stubborn in
+    which it basically parses the whole file and stores the positions
+    of all
+    the objects it finds, so for some half broken pdf files this is good
+    enough and we will be able to render those files just fine
+
+ poppler/PDFDoc.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 646be0366430891fcea27980623e9b8f31acfd8f
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Jan 2 23:14:53 2019 +0100
+
+    Update (C)
+
+ poppler/PDFDoc.cc | 2 +-
+ splash/Splash.cc  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 9fd5ec0e6e5f763b190f2a55ceb5427cfe851d5f
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Mon Dec 31 11:47:57 2018 +0100
+
+    PDFDoc::setup: Fix return value
+
+    At that point xref can have gone wrong since extractPDFSubtype() can
+    have caused a reconstruct that broke stuff so instead of
+    unconditionally
+    returning true, return xref->isOk()
+
+    Fixes #706
+
+ poppler/PDFDoc.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 141405e0cc6aead0f2eed83f2f5834afa2b0dbe9
+Author: Stefan Brüns <stefan.bruens@rwth-aachen.de>
+Date:   Wed Aug 29 00:16:02 2018 +0200
+
+    Allocate SplashXPathScanner on the stack
+
+    SplashXPathScanner is only used inside the each fill function,
+    but newer
+    passed to the outside. As it is small, there is no reason to not
+    allocate it on the stack.
+
+ splash/Splash.cc | 37 +++++++++++++++----------------------
+ 1 file changed, 15 insertions(+), 22 deletions(-)
+
+commit 3cfc61a2a3b97bc3d0cfea874abddcc7f26a68d3
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Jan 2 00:24:35 2019 +0100
+
+    Forgot one
+
+    Again no (C)
+
+ poppler/JPXStream.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 615a12a4d12bc4769226f73026961623f0b15b62
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Jan 2 00:20:58 2019 +0100
+
+    Fix some trivial warnings
+
+    No (C) for this (a machine could do it)
+
+ poppler/JPXStream.cc        | 34 +++++++++++++++++-----------------
+ poppler/SplashOutputDev.cc  |  2 +-
+ poppler/Stream.cc           | 12 ++++++------
+ qt5/src/poppler-document.cc |  4 ++--
+ qt5/src/poppler-form.cc     |  2 +-
+ 5 files changed, 27 insertions(+), 27 deletions(-)
+
+commit ac407360c3d3494a8ebc872080d680b76c294b0a
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Jan 2 00:22:17 2019 +0100
+
+    Add (C) from last commit
+
+ poppler/GfxState.cc   | 2 +-
+ qt5/src/poppler-qt5.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit e07c8b4784234383cb5ddcf1133ea91a772506e2
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Tue Jan 1 10:54:40 2019 +0100
+
+    Avoid global display profile state becoming an uncontrolled memory
+    leak by enforcing single initialization. Closes #654
+
+ poppler/GfxState.cc   | 9 +++++++++
+ qt5/src/poppler-qt5.h | 4 ++++
+ 2 files changed, 13 insertions(+)
+
+commit 15d2d1edfae7670ab8b75e2e47cbeab1d3ecc842
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Jan 2 00:03:52 2019 +0100
+
+    Welcome 2019
+
+ poppler/poppler-config.h.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 39a251b1b3a3343400a08e2f03c5518a26624626
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Mon Dec 24 15:40:38 2018 +0100
+
+    Do not try to parse into unallocated XRef entry and return pointer
+    to dummy entry instead. Closes #692 and oss-fuzz/12330
+
+ poppler/XRef.cc | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
+
+commit de0c0b8324e776f0b851485e0fc9622fc35695b7
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Dec 29 01:25:17 2018 +0100
+
+    FileSpec: Move the fileSpec.dictLookup call inside fileSpec.isDict if
+
+    Fixes #704
+
+ poppler/FileSpec.cc | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 653d743771ed778e46be8c14cccf4fb7e2205b74
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Dec 27 17:53:53 2018 +0100
+
+    JBIG2Stream: Fix uninitialized memory read on broken files
+
+    fixes oss-fuzz/12243
+
+ poppler/JBIG2Stream.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7f87dc10b6adccd6d1b977a28b064add254aa2da
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Thu Dec 27 11:54:53 2018 +0100
+
+    Do not try to construct invalid rich media annotation assets. Closes
+    #703
+
+ poppler/Annot.cc | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
+
+commit 3ef359a91ae84315ff8667f0c5286c9cafa9332e
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Wed Dec 26 12:34:36 2018 +0100
+
+    Update (C)
+
+ cpp/poppler-global.cpp | 1 +
+ cpp/poppler-global.h   | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 5cba64142f716f5df61c2136175b86e6d7256526
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Mon Dec 24 23:20:45 2018 +0100
+
+    Add API to cpp frontend to specify a custom data directory for
+    initialization of global parameters.
+
+ cpp/poppler-document-private.h |  3 +++
+ cpp/poppler-document.cpp       | 15 ++++++++++++++-
+ cpp/poppler-global.cpp         | 17 +++++++++++++++++
+ cpp/poppler-global.h           |  2 ++
+ 4 files changed, 36 insertions(+), 1 deletion(-)
+
+commit 72c316d12e1fe26bf6b4f3911ba8e5bcc46af354
+Author: Jeroen Ooms <jeroenooms@gmail.com>
+Date:   Sun Dec 9 17:21:28 2018 +0100
+
+    Windows: only set SOVERSION for shared libs
+
+ CMakeLists.txt         | 2 +-
+ cpp/CMakeLists.txt     | 2 +-
+ glib/CMakeLists.txt    | 2 +-
+ qt5/src/CMakeLists.txt | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 6e7cbc713ae584d195f77845d6cafcdc80fb64ab
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Dec 22 11:11:59 2018 +0100
+
+    Gfx::doTilingPatternFill: Fix undefined behaviour
+
+    oss-fuzz/8548
+
+ poppler/Gfx.cc | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 61fe5ae92794feaaaf4eb8abb01d55d152e28dd7
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sat Dec 22 10:59:36 2018 +0100
+
+    qt5: test-render-to-file: Save files as png
+
+    Is a greeeeeeeeeeeeeat disk space saver
+
+ qt5/tests/test-render-to-file.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 230652c1af3c1b3b91e10d94ab79339135dc6ca3
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Tue Dec 11 22:50:07 2018 +0100
+
+    Fix memory handling bug
+
+    The CIDToGID map is an array of ints.  The code properly allocated
+    a number N of ints, but then used memcpy for N unsigned shorts.
+    That left the upper half of the array uninitialized.
+
+ qt5/src/ArthurOutputDev.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 13ed70184e125a20a5bdbfbf73456de741c81d9f
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 9 22:28:21 2018 +0100
+
+    Remove method SplashFTFontFile::getCodeToGID
+
+    This method was added in cc43c720e857548175a9e35b0686a1a7a8957f50
+    for the use in the ArturOutputDev::updateFont.
+    It is not use there anymore, and can therefore be removed again.
+
+ splash/SplashFTFontFile.cc | 4 ----
+ splash/SplashFTFontFile.h  | 3 ---
+ 2 files changed, 7 deletions(-)
+
+commit 3c56110469b86a7665c18ce165d4ad0e5870ebb3
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Sat Sep 15 13:58:37 2018 +0200
+
+    Remove all Splash code from the Arthur backend
+
+    Previously, Splash code was used to get the codeToGID
+    mapping for font rendering (which you apparently cannot
+    get from Qt).  This patch reimplements the same functionality
+    using only FoFi and FreeType.  This makes the code easier
+    to understand, because it removes several layers of
+    redirection.
+
+ qt5/src/ArthurOutputDev.cc | 355
+ ++++++++++++++++++++-------------------------
+ qt5/src/ArthurOutputDev.h  |  15 +-
+ qt5/src/CMakeLists.txt     |   2 +-
+ 3 files changed, 167 insertions(+), 205 deletions(-)
+
+commit 7477b71e5c4f2d3f4876c1c9cba3c937506bfdaa
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Thu Dec 20 14:15:46 2018 +0200
+
+    Fix minor typos
+
+ cpp/poppler-document.cpp          | 2 +-
+ cpp/poppler-global.cpp            | 2 +-
+ glib/poppler-document.cc          | 8 ++++----
+ glib/poppler-document.h           | 2 +-
+ glib/poppler-form-field.cc        | 2 +-
+ glib/poppler-page.cc              | 4 ++--
+ glib/poppler-page.h               | 6 +++---
+ glib/poppler-structure-element.cc | 4 ++--
+ poppler/Annot.cc                  | 6 +++---
+ poppler/Annot.h                   | 4 ++--
+ poppler/Array.h                   | 2 +-
+ poppler/CachedFile.h              | 2 +-
+ poppler/CairoOutputDev.cc         | 4 ++--
+ poppler/CairoRescaleBox.cc        | 4 ++--
+ poppler/CharCodeToUnicode.cc      | 2 +-
+ poppler/Decrypt.cc                | 4 ++--
+ poppler/FlateStream.cc            | 4 ++--
+ poppler/Form.cc                   | 4 ++--
+ poppler/GfxFont.cc                | 2 +-
+ poppler/GfxState.h                | 4 ++--
+ poppler/PDFDoc.cc                 | 2 +-
+ poppler/SignatureHandler.cc       | 2 +-
+ poppler/SplashOutputDev.cc        | 2 +-
+ poppler/StructElement.cc          | 2 +-
+ poppler/StructTreeRoot.cc         | 2 +-
+ qt5/src/poppler-annotation.h      | 4 ++--
+ qt5/src/poppler-form.h            | 4 ++--
+ qt5/src/poppler-link.h            | 8 ++++----
+ qt5/src/poppler-page.cc           | 2 +-
+ qt5/src/poppler-qt5.h             | 6 +++---
+ splash/SplashClip.h               | 2 +-
+ test/perf-test.cc                 | 8 ++++----
+ utils/HtmlOutputDev.h             | 2 +-
+ utils/pdftohtml.cc                | 2 +-
+ 34 files changed, 60 insertions(+), 60 deletions(-)
+
+commit e676558a8b2d71906f1bf77407318a4fef6a60c2
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sun Dec 16 23:40:02 2018 +0100
+
+    qt5: Add the possibility of getting version
+
+    We provide both the build and runtime version, so if an app was built
+    against poppler 0.65 but running against 0.72, the app can say
+    somewhere
+    in it's about/config dialogs
+
+    Running poppler 0.72 (built against 0.65)
+
+    This way we can explain to users while some features are not available
+    even if they should be, because the runtime and build time differences
+    sometimes matter
+
+ qt5/src/CMakeLists.txt       |  4 +++
+ qt5/src/poppler-version.cpp  | 40 +++++++++++++++++++++++++++
+ qt5/src/poppler-version.h.in | 66
+ ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 110 insertions(+)
+
+commit 3f4e9e49dd2063ae64c2575faf713942878e8a67
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Tue Dec 18 22:15:29 2018 +0100
+
+    Test for issue 690 with new file
+
+ qt5/tests/check_password.cpp | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+commit 1a49822dc7a149174c6cc51fd163f7fda3fbb6c4
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Tue Dec 18 21:46:00 2018 +0100
+
+    Copy the string contents, not the string object, into the key
+    buffer. Closes #690
+
+ poppler/Decrypt.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 641312cb67c9f31188367323ea186f40cbb103e5
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Dec 13 22:41:27 2018 +0100
+
+    Make it more obvious that XPDF headers have unstable API/ABI
+
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 7565f2366080304bfe4ab5846c90cf4cbc89457b
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Sun Dec 9 22:43:20 2018 +0100
+
+    Update (C)
+
+ poppler/TextOutputDev.cc       | 1 +
+ poppler/TextOutputDev.h        | 1 +
+ poppler/UTF.cc                 | 1 +
+ poppler/UTF.h                  | 1 +
+ qt5/src/poppler-page-private.h | 1 +
+ qt5/src/poppler-page.cc        | 1 +
+ qt5/src/poppler-qt5.h          | 1 +
+ 7 files changed, 7 insertions(+)
+
+commit 86326030f6989c79f8dd9e91cd4c249278cdbc49
+Author: Nelson Benítez León <nbenitezl@gmail.com>
+Date:   Mon Sep 10 15:51:56 2018 +0100
+
+    add new 'IgnoreDiacritics' option to ::findText()
+
+    This makes possible that simple ascii search terms
+    can match on their accented and other diacritics
+    counterparts.
+
+    This option will be ignored if the search term is
+    not pure Ascii.
+
+    Issue #637
+
+ glib/poppler-page.cc           |  1 +
+ glib/poppler.h                 |  6 +++-
+ poppler/TextOutputDev.cc       | 77
+ ++++++++++++++++++++++++++++++++++++++----
+ poppler/TextOutputDev.h        | 15 ++++++++
+ poppler/UTF.cc                 | 59 ++++++++++++++++++++++++++++++++
+ poppler/UTF.h                  | 13 +++++++
+ qt5/src/poppler-page-private.h |  4 +--
+ qt5/src/poppler-page.cc        | 18 +++++-----
+ qt5/src/poppler-qt5.h          |  5 ++-
+ qt5/tests/check_search.cpp     | 58 +++++++++++++++++++++++++++++++
+ 10 files changed, 237 insertions(+), 19 deletions(-)
+
+commit 90a3778a8f73761c421991dca789d3a196940573
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Fri Dec 7 15:54:11 2018 +0100
+
+    Update (C)
+
+ cpp/poppler-global.cpp  | 1 +
+ cpp/poppler-private.cpp | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 135e897ed9a550361eb8f07a5ffedec48f079bd9
+Author: Suzuki Toshiya <mpsuzuki@hiroshima-u.ac.jp>
+Date:   Fri Dec 7 09:21:42 2018 +0100
+
+    Improve handling of UTF-16 in cpp frontend by considering Endianess
+
+ cpp/poppler-global.cpp  | 12 ++++++++++--
+ cpp/poppler-private.cpp |  2 +-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+commit a4fad73c86a2eabe004e7cbaa8c9c0ff42146375
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Dec 6 18:27:04 2018 +0100
+
+    cpp: Fix page::text_list encoding issue
+
+    Text from TextoutputDev always comes in UTF-8
+
+    Well it comes in GlobalParams::textEncoding but that is UTF-8 and we
+    don't let people change it
+
+ cpp/poppler-page.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 2f442c6a54d5dc8941e40c12f814869b93ded400
+Author: Albert Astals Cid <aacid@kde.org>
+Date:   Thu Dec 6 20:15:51 2018 +0100
+
+    Update (C)
+
+ cpp/poppler-document-private.h | 1 +
+ qt5/src/poppler-document.cc    | 2 +-
+ qt5/src/poppler-private.cc     | 1 +
+ qt5/src/poppler-private.h      | 1 +
+ 4 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 91419d2a2c4966a4e347b78c50b65625164257db
+Author: Adam Reichold <adam.reichold@t-online.de>
+Date:   Mon Dec 3 19:57:18 2018 +0100
+
+    Make initialization of globalParams in the qt5 frontend threadsafe
+    so that multiple threads can create documents concurrently.
+
+ qt5/src/poppler-document.cc | 1 +
+ qt5/src/poppler-private.cc  | 4 ++++
+ qt5/src/poppler-private.h   | 2 ++
+ 3 files changed, 7 insertions(+)
+
+commit e5ab9d3b387117d3d6f2e52de5d35882057fa209
+Author: Yuliana <vinograduss@mail.ru>
+Date:   Mon Dec 3 19:50:50 2018 +0100
+
+    Make initialization of globalParams in the cpp frontend threadsafe
+    so that multiple threads can create documents concurrently.
+
+ cpp/poppler-document-private.h | 1 +
+ cpp/poppler-document.cpp       | 5 +++++
+ 2 files changed, 6 insertions(+)
+
+commit ef3ef702bc3dc845731e43215400448c5324efd4
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 30 18:56:05 2018 +0100
+
+    Remove the file gtypes.h completely
+
+ CMakeLists.txt                   |  1 -
+ fofi/FoFiBase.h                  |  2 --
+ fofi/FoFiEncodings.h             |  2 --
+ fofi/FoFiIdentifier.cc           |  1 -
+ fofi/FoFiTrueType.cc             |  1 -
+ fofi/FoFiTrueType.h              |  1 -
+ fofi/FoFiType1.h                 |  1 -
+ fofi/FoFiType1C.h                |  1 -
+ goo/FixedPoint.h                 |  1 -
+ goo/GooString.h                  |  2 --
+ goo/GooTimer.h                   |  1 -
+ goo/gdir.h                       |  1 -
+ goo/gfile.h                      |  1 -
+ goo/grandom.h                    |  2 --
+ goo/gtypes.h                     | 31 -------------------------------
+ poppler/BuiltinFont.h            |  2 --
+ poppler/CMap.h                   |  1 -
+ poppler/CachedFile.h             |  1 -
+ poppler/CairoFontEngine.h        |  1 -
+ poppler/CairoOutputDev.h         |  1 -
+ poppler/CairoRescaleBox.h        |  1 -
+ poppler/CharCodeToUnicode.h      |  1 -
+ poppler/CompactFontTables.h      |  2 --
+ poppler/DateInfo.h               |  1 -
+ poppler/Decrypt.h                |  1 -
+ poppler/FontInfo.h               |  1 -
+ poppler/Function.h               |  1 -
+ poppler/Gfx.h                    |  1 -
+ poppler/GfxFont.h                |  1 -
+ poppler/GfxState.h               |  1 -
+ poppler/GlobalParams.h           |  1 -
+ poppler/Hints.h                  |  1 -
+ poppler/JArithmeticDecoder.h     |  2 --
+ poppler/JBIG2Stream.h            |  1 -
+ poppler/JPEG2000Stream.h         |  1 -
+ poppler/JPXStream.h              |  1 -
+ poppler/Linearization.h          |  1 -
+ poppler/MarkedContentOutputDev.h |  1 -
+ poppler/Object.h                 |  1 -
+ poppler/OutputDev.h              |  1 -
+ poppler/PSTokenizer.h            |  2 --
+ poppler/PageLabelInfo.h          |  1 -
+ poppler/PreScanOutputDev.h       |  1 -
+ poppler/SecurityHandler.h        |  1 -
+ poppler/SplashOutputDev.h        |  1 -
+ poppler/Stream.h                 |  1 -
+ poppler/StructElement.h          |  1 -
+ poppler/StructTreeRoot.h         |  1 -
+ poppler/TextOutputDev.h          |  1 -
+ poppler/UnicodeMap.h             |  1 -
+ poppler/UnicodeTypeTable.h       |  2 --
+ poppler/ViewerPreferences.h      |  2 --
+ poppler/XRef.h                   |  1 -
+ qt5/src/ArthurOutputDev.h        |  1 -
+ splash/SplashFTFontEngine.h      |  1 -
+ splash/SplashFont.h              |  1 -
+ splash/SplashFontEngine.h        |  1 -
+ splash/SplashFontFile.h          |  1 -
+ splash/SplashFontFileID.h        |  2 --
+ splash/SplashGlyphBitmap.h       |  2 --
+ splash/SplashTypes.h             |  2 --
+ utils/HtmlOutputDev.h            |  1 -
+ utils/HtmlUtils.h                |  1 -
+ utils/ImageOutputDev.h           |  1 -
+ utils/JSInfo.h                   |  1 -
+ utils/parseargs.h                |  2 --
+ utils/pdfdetach.cc               |  1 -
+ utils/pdftocairo-win32.h         |  1 -
+ utils/pdftocairo.cc              |  1 -
+ 69 files changed, 113 deletions(-)
+
+commit cc51c2183cba19e84d2a7e2dddc0278418264357
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 30 18:18:13 2018 +0100
+
+    Replace Gulong by unsigned long
+
+ goo/GooString.cc     |  4 ++--
+ goo/gtypes.h         |  5 -----
+ poppler/Decrypt.cc   | 22 +++++++++++-----------
+ poppler/Movie.h      |  2 +-
+ poppler/Rendition.cc |  2 +-
+ poppler/Stream.cc    |  8 ++++----
+ 6 files changed, 19 insertions(+), 24 deletions(-)
+
+commit 22053d55a26baf856a0b95552875e748dd1fb849
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 30 18:12:17 2018 +0100
+
+    Replace Guint by unsigned int
+
+ fofi/FoFiBase.cc              |  12 +-
+ fofi/FoFiBase.h               |   6 +-
+ fofi/FoFiIdentifier.cc        |  56 ++++----
+ fofi/FoFiTrueType.cc          | 114 +++++++--------
+ fofi/FoFiTrueType.h           |  20 +--
+ fofi/FoFiType1.cc             |   2 +-
+ glib/poppler-input-stream.cc  |   8 +-
+ goo/GooString.cc              |   4 +-
+ goo/gtypes.h                  |   1 -
+ poppler/Annot.cc              |   2 +-
+ poppler/Annot.h               |   6 +-
+ poppler/CMap.cc               |  22 +--
+ poppler/CMap.h                |   8 +-
+ poppler/CachedFile.h          |   2 +-
+ poppler/CairoFontEngine.cc    |  10 +-
+ poppler/CairoFontEngine.h     |   8 +-
+ poppler/Catalog.cc            |   2 +-
+ poppler/Catalog.h             |   4 +-
+ poppler/CharCodeToUnicode.cc  |   2 +-
+ poppler/CurlPDFDocBuilder.cc  |   2 +-
+ poppler/Decrypt.cc            |  44 +++---
+ poppler/Decrypt.h             |   4 +-
+ poppler/FontInfo.cc           |   2 +-
+ poppler/Function.cc           |   6 +-
+ poppler/Gfx.cc                |   4 +-
+ poppler/GfxFont.cc            |   2 +-
+ poppler/GfxState.cc           |  24 ++--
+ poppler/GfxState.h            |  10 +-
+ poppler/Hints.cc              |  88 ++++++------
+ poppler/Hints.h               |  64 ++++-----
+ poppler/JArithmeticDecoder.cc |  22 +--
+ poppler/JArithmeticDecoder.h  |  22 +--
+ poppler/JBIG2Stream.cc        | 316
+ +++++++++++++++++++++---------------------
+ poppler/JBIG2Stream.h         |  72 +++++-----
+ poppler/JPXStream.cc          | 196 +++++++++++++-------------
+ poppler/JPXStream.h           | 170 +++++++++++------------
+ poppler/Linearization.cc      |  14 +-
+ poppler/Linearization.h       |  14 +-
+ poppler/PDFDoc.cc             |  20 +--
+ poppler/PDFDoc.h              |  16 +--
+ poppler/PSOutputDev.cc        |   2 +-
+ poppler/SplashOutputDev.cc    |   2 +-
+ poppler/Stream.cc             |  12 +-
+ poppler/Stream.h              |  10 +-
+ poppler/StructElement.h       |  12 +-
+ poppler/UnicodeMap.cc         |   4 +-
+ poppler/UnicodeMap.h          |   2 +-
+ poppler/XRef.cc               |   4 +-
+ qt5/src/poppler-form.cc       |   2 +-
+ splash/Splash.cc              |  54 ++++----
+ splash/Splash.h               |   2 +-
+ splash/SplashState.h          |   2 +-
+ splash/SplashXPath.h          |   2 +-
+ utils/pdfunite.cc             |   4 +-
+ 54 files changed, 757 insertions(+), 758 deletions(-)
+
+commit b7503eb3c2364e7ca7fc37418bb4cc484437ea71
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 30 18:08:02 2018 +0100
+
+    Replace Gushort by unsigned short
+
+ fofi/FoFiEncodings.cc       |  6 +++---
+ fofi/FoFiEncodings.h        |  6 +++---
+ fofi/FoFiType1C.cc          | 16 ++++++++--------
+ fofi/FoFiType1C.h           |  6 +++---
+ goo/gtypes.h                |  1 -
+ poppler/BuiltinFont.cc      |  2 +-
+ poppler/BuiltinFont.h       |  4 ++--
+ poppler/CompactFontTables.h |  6 +++---
+ poppler/GfxFont.cc          |  6 +++---
+ poppler/GfxState.h          |  4 ++--
+ poppler/JPXStream.h         |  2 +-
+ poppler/Movie.h             |  4 ++--
+ poppler/SplashOutputDev.cc  |  6 +++---
+ poppler/Stream.cc           | 12 ++++++------
+ poppler/Stream.h            | 12 ++++++------
+ qt5/src/ArthurOutputDev.cc  |  2 +-
+ splash/SplashMath.h         | 12 ++++++------
+ utils/ImageOutputDev.cc     |  2 +-
+ 18 files changed, 54 insertions(+), 55 deletions(-)
+
+commit 51bb46766cc5b50d81227cd91e518bc78b0a944b
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 30 18:02:01 2018 +0100
+
+    Replace Guchar by unsigned char
+
+ fofi/FoFiBase.cc              |   2 +-
+ fofi/FoFiBase.h               |   2 +-
+ fofi/FoFiTrueType.cc          |  76 ++++----
+ fofi/FoFiTrueType.h           |   4 +-
+ fofi/FoFiType1.cc             |   4 +-
+ fofi/FoFiType1C.cc            |  44 ++---
+ fofi/FoFiType1C.h             |   4 +-
+ glib/poppler-input-stream.cc  |   2 +-
+ glib/poppler-input-stream.h   |   2 +-
+ goo/grandom.cc                |   4 +-
+ goo/grandom.h                 |   2 +-
+ goo/gtypes.h                  |   1 -
+ poppler/CairoOutputDev.cc     |  20 +-
+ poppler/DCTStream.cc          |   2 +-
+ poppler/DCTStream.h           |   2 +-
+ poppler/Decrypt.cc            | 276 +++++++++++++--------------
+ poppler/Decrypt.h             |  30 +--
+ poppler/FlateEncoder.h        |   8 +-
+ poppler/Gfx.cc                |   2 +-
+ poppler/GfxFont.h             |   2 +-
+ poppler/GfxState.cc           | 214 ++++++++++-----------
+ poppler/GfxState.h            | 104 +++++-----
+ poppler/JArithmeticDecoder.cc |   2 +-
+ poppler/JArithmeticDecoder.h  |   2 +-
+ poppler/JBIG2Stream.cc        |  26 +--
+ poppler/JBIG2Stream.h         |   6 +-
+ poppler/JPEG2000Stream.cc     |   4 +-
+ poppler/JPEG2000Stream.h      |   4 +-
+ poppler/Object.h              |   4 +-
+ poppler/PDFDoc.cc             |  18 +-
+ poppler/PDFDoc.h              |   8 +-
+ poppler/PSOutputDev.cc        |  32 ++--
+ poppler/Page.cc               |   2 +-
+ poppler/Parser.cc             |   4 +-
+ poppler/Parser.h              |   4 +-
+ poppler/SecurityHandler.h     |   6 +-
+ poppler/SplashOutputDev.cc    | 156 +++++++--------
+ poppler/SplashOutputDev.h     |  12 +-
+ poppler/Stream.cc             |  86 ++++-----
+ poppler/Stream.h              |  52 ++---
+ poppler/XRef.cc               |   4 +-
+ poppler/XRef.h                |   6 +-
+ qt5/src/ArthurOutputDev.cc    |  10 +-
+ qt5/src/poppler-media.cc      |   2 +-
+ qt5/src/poppler-page.cc       |   2 +-
+ splash/Splash.cc              | 432
+ +++++++++++++++++++++---------------------
+ splash/Splash.h               |  12 +-
+ splash/SplashBitmap.cc        |  18 +-
+ splash/SplashBitmap.h         |   6 +-
+ splash/SplashClip.cc          |   4 +-
+ splash/SplashClip.h           |   2 +-
+ splash/SplashFTFont.cc        |   4 +-
+ splash/SplashFont.cc          |   4 +-
+ splash/SplashFont.h           |   2 +-
+ splash/SplashGlyphBitmap.h    |   2 +-
+ splash/SplashPath.cc          |   6 +-
+ splash/SplashPath.h           |   4 +-
+ splash/SplashScreen.cc        |  18 +-
+ splash/SplashScreen.h         |  10 +-
+ splash/SplashState.cc         |  40 ++--
+ splash/SplashState.h          |  10 +-
+ splash/SplashTypes.h          |  34 ++--
+ splash/SplashXPathScanner.cc  |  12 +-
+ test/perf-test.cc             |   2 +-
+ utils/HtmlOutputDev.cc        |   6 +-
+ utils/HtmlOutputDev.h         |   2 +-
+ utils/ImageOutputDev.cc       |   4 +-
+ utils/pdfinfo.cc              |   2 +-
+ 68 files changed, 947 insertions(+), 948 deletions(-)
+
+commit 27954f7d44275d4fc458da680bba89ab749d3c07
+Author: Oliver Sander <oliver.sander@tu-dresden.de>
+Date:   Fri Nov 30 17:55:48 2018 +0100
+
+    Move definition of type Goffset from gtypes.h to gfile.h
+
+    Because it is used for file-related stuff.
+
+ goo/gfile.h     | 3 +++
+ goo/gtypes.h    | 1 -
+ poppler/Error.h | 2 +-
+ 3 files changed, 4 insertions(+), 2 deletions(-)
+
 commit 9414cc632c17afb7b78c559447b2044268f06cfc
 Author: Albert Astals Cid <aacid@kde.org>
 Date:   Thu Dec 6 17:22:06 2018 +0100
