@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.73.0
-Release  : 30
+Release  : 32
 URL      : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz.sig
@@ -133,7 +133,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547163820
+export SOURCE_DATE_EPOCH=1547233802
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -156,7 +156,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1547163820
+export SOURCE_DATE_EPOCH=1547233802
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -206,8 +206,177 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-%exclude /usr/lib64/haswell/libpoppler-qt5.so
-%exclude /usr/lib64/libpoppler-qt5.so
+%exclude /usr/include/poppler/Annot.h
+%exclude /usr/include/poppler/Array.h
+%exclude /usr/include/poppler/BuiltinFont.h
+%exclude /usr/include/poppler/BuiltinFontTables.h
+%exclude /usr/include/poppler/CMap.h
+%exclude /usr/include/poppler/CachedFile.h
+%exclude /usr/include/poppler/Catalog.h
+%exclude /usr/include/poppler/CertificateInfo.h
+%exclude /usr/include/poppler/CharCodeToUnicode.h
+%exclude /usr/include/poppler/CharTypes.h
+%exclude /usr/include/poppler/CompactFontTables.h
+%exclude /usr/include/poppler/CurlCachedFile.h
+%exclude /usr/include/poppler/CurlPDFDocBuilder.h
+%exclude /usr/include/poppler/DateInfo.h
+%exclude /usr/include/poppler/Decrypt.h
+%exclude /usr/include/poppler/Dict.h
+%exclude /usr/include/poppler/Error.h
+%exclude /usr/include/poppler/ErrorCodes.h
+%exclude /usr/include/poppler/FileSpec.h
+%exclude /usr/include/poppler/FontEncodingTables.h
+%exclude /usr/include/poppler/FontInfo.h
+%exclude /usr/include/poppler/Form.h
+%exclude /usr/include/poppler/Function.h
+%exclude /usr/include/poppler/Gfx.h
+%exclude /usr/include/poppler/GfxFont.h
+%exclude /usr/include/poppler/GfxState.h
+%exclude /usr/include/poppler/GfxState_helpers.h
+%exclude /usr/include/poppler/GlobalParams.h
+%exclude /usr/include/poppler/Hints.h
+%exclude /usr/include/poppler/JArithmeticDecoder.h
+%exclude /usr/include/poppler/JBIG2Stream.h
+%exclude /usr/include/poppler/JPXStream.h
+%exclude /usr/include/poppler/Lexer.h
+%exclude /usr/include/poppler/Linearization.h
+%exclude /usr/include/poppler/Link.h
+%exclude /usr/include/poppler/LocalPDFDocBuilder.h
+%exclude /usr/include/poppler/MarkedContentOutputDev.h
+%exclude /usr/include/poppler/Movie.h
+%exclude /usr/include/poppler/NameToCharCode.h
+%exclude /usr/include/poppler/NameToUnicodeTable.h
+%exclude /usr/include/poppler/Object.h
+%exclude /usr/include/poppler/OptionalContent.h
+%exclude /usr/include/poppler/Outline.h
+%exclude /usr/include/poppler/OutputDev.h
+%exclude /usr/include/poppler/PDFDoc.h
+%exclude /usr/include/poppler/PDFDocBuilder.h
+%exclude /usr/include/poppler/PDFDocEncoding.h
+%exclude /usr/include/poppler/PDFDocFactory.h
+%exclude /usr/include/poppler/PSOutputDev.h
+%exclude /usr/include/poppler/PSTokenizer.h
+%exclude /usr/include/poppler/Page.h
+%exclude /usr/include/poppler/PageTransition.h
+%exclude /usr/include/poppler/Parser.h
+%exclude /usr/include/poppler/PopplerCache.h
+%exclude /usr/include/poppler/PreScanOutputDev.h
+%exclude /usr/include/poppler/ProfileData.h
+%exclude /usr/include/poppler/Rendition.h
+%exclude /usr/include/poppler/SecurityHandler.h
+%exclude /usr/include/poppler/Sound.h
+%exclude /usr/include/poppler/SplashOutputDev.h
+%exclude /usr/include/poppler/StdinCachedFile.h
+%exclude /usr/include/poppler/StdinPDFDocBuilder.h
+%exclude /usr/include/poppler/Stream-CCITT.h
+%exclude /usr/include/poppler/Stream.h
+%exclude /usr/include/poppler/StructElement.h
+%exclude /usr/include/poppler/StructTreeRoot.h
+%exclude /usr/include/poppler/TextOutputDev.h
+%exclude /usr/include/poppler/UTF.h
+%exclude /usr/include/poppler/UnicodeCClassTables.h
+%exclude /usr/include/poppler/UnicodeCompTables.h
+%exclude /usr/include/poppler/UnicodeDecompTables.h
+%exclude /usr/include/poppler/UnicodeMap.h
+%exclude /usr/include/poppler/UnicodeMapFuncs.h
+%exclude /usr/include/poppler/UnicodeMapTables.h
+%exclude /usr/include/poppler/UnicodeTypeTable.h
+%exclude /usr/include/poppler/ViewerPreferences.h
+%exclude /usr/include/poppler/XRef.h
+%exclude /usr/include/poppler/fofi/FoFiBase.h
+%exclude /usr/include/poppler/fofi/FoFiEncodings.h
+%exclude /usr/include/poppler/fofi/FoFiIdentifier.h
+%exclude /usr/include/poppler/fofi/FoFiTrueType.h
+%exclude /usr/include/poppler/fofi/FoFiType1.h
+%exclude /usr/include/poppler/fofi/FoFiType1C.h
+%exclude /usr/include/poppler/goo/FixedPoint.h
+%exclude /usr/include/poppler/goo/GooCheckedOps.h
+%exclude /usr/include/poppler/goo/GooLikely.h
+%exclude /usr/include/poppler/goo/GooList.h
+%exclude /usr/include/poppler/goo/GooString.h
+%exclude /usr/include/poppler/goo/GooTimer.h
+%exclude /usr/include/poppler/goo/ImgWriter.h
+%exclude /usr/include/poppler/goo/JpegWriter.h
+%exclude /usr/include/poppler/goo/PNGWriter.h
+%exclude /usr/include/poppler/goo/TiffWriter.h
+%exclude /usr/include/poppler/goo/gdir.h
+%exclude /usr/include/poppler/goo/gfile.h
+%exclude /usr/include/poppler/goo/gmem.h
+%exclude /usr/include/poppler/goo/grandom.h
+%exclude /usr/include/poppler/goo/gstrtod.h
+%exclude /usr/include/poppler/poppler-config.h
+%exclude /usr/include/poppler/splash/Splash.h
+%exclude /usr/include/poppler/splash/SplashBitmap.h
+%exclude /usr/include/poppler/splash/SplashClip.h
+%exclude /usr/include/poppler/splash/SplashErrorCodes.h
+%exclude /usr/include/poppler/splash/SplashFTFont.h
+%exclude /usr/include/poppler/splash/SplashFTFontEngine.h
+%exclude /usr/include/poppler/splash/SplashFTFontFile.h
+%exclude /usr/include/poppler/splash/SplashFont.h
+%exclude /usr/include/poppler/splash/SplashFontEngine.h
+%exclude /usr/include/poppler/splash/SplashFontFile.h
+%exclude /usr/include/poppler/splash/SplashFontFileID.h
+%exclude /usr/include/poppler/splash/SplashGlyphBitmap.h
+%exclude /usr/include/poppler/splash/SplashMath.h
+%exclude /usr/include/poppler/splash/SplashPath.h
+%exclude /usr/include/poppler/splash/SplashPattern.h
+%exclude /usr/include/poppler/splash/SplashScreen.h
+%exclude /usr/include/poppler/splash/SplashState.h
+%exclude /usr/include/poppler/splash/SplashTypes.h
+%exclude /usr/include/poppler/splash/SplashXPath.h
+%exclude /usr/include/poppler/splash/SplashXPathScanner.h
+%exclude /usr/lib64/haswell/libpoppler.so
+%exclude /usr/lib64/libpoppler.so
+%exclude /usr/lib64/pkgconfig/poppler-splash.pc
+%exclude /usr/lib64/pkgconfig/poppler.pc
+/usr/include/poppler/cpp/poppler-document.h
+/usr/include/poppler/cpp/poppler-embedded-file.h
+/usr/include/poppler/cpp/poppler-font.h
+/usr/include/poppler/cpp/poppler-global.h
+/usr/include/poppler/cpp/poppler-image.h
+/usr/include/poppler/cpp/poppler-page-renderer.h
+/usr/include/poppler/cpp/poppler-page-transition.h
+/usr/include/poppler/cpp/poppler-page.h
+/usr/include/poppler/cpp/poppler-rectangle.h
+/usr/include/poppler/cpp/poppler-toc.h
+/usr/include/poppler/cpp/poppler-version.h
+/usr/include/poppler/glib/poppler-action.h
+/usr/include/poppler/glib/poppler-annot.h
+/usr/include/poppler/glib/poppler-attachment.h
+/usr/include/poppler/glib/poppler-date.h
+/usr/include/poppler/glib/poppler-document.h
+/usr/include/poppler/glib/poppler-enums.h
+/usr/include/poppler/glib/poppler-features.h
+/usr/include/poppler/glib/poppler-form-field.h
+/usr/include/poppler/glib/poppler-layer.h
+/usr/include/poppler/glib/poppler-macros.h
+/usr/include/poppler/glib/poppler-media.h
+/usr/include/poppler/glib/poppler-movie.h
+/usr/include/poppler/glib/poppler-page.h
+/usr/include/poppler/glib/poppler-structure-element.h
+/usr/include/poppler/glib/poppler.h
+/usr/include/poppler/qt5/poppler-annotation.h
+/usr/include/poppler/qt5/poppler-export.h
+/usr/include/poppler/qt5/poppler-form.h
+/usr/include/poppler/qt5/poppler-link.h
+/usr/include/poppler/qt5/poppler-media.h
+/usr/include/poppler/qt5/poppler-optcontent.h
+/usr/include/poppler/qt5/poppler-page-transition.h
+/usr/include/poppler/qt5/poppler-qt5.h
+/usr/include/poppler/qt5/poppler-version.h
+/usr/lib64/haswell/libpoppler-cpp.so
+/usr/lib64/haswell/libpoppler-glib.so
+/usr/lib64/haswell/libpoppler-qt5.so
+/usr/lib64/libpoppler-cpp.so
+/usr/lib64/libpoppler-glib.so
+/usr/lib64/libpoppler-qt5.so
+/usr/lib64/pkgconfig/poppler-cairo.pc
+/usr/lib64/pkgconfig/poppler-cpp.pc
+/usr/lib64/pkgconfig/poppler-glib.pc
+/usr/lib64/pkgconfig/poppler-qt5.pc
+
+%files extras
+%defattr(-,root,root,-)
 /usr/include/poppler/Annot.h
 /usr/include/poppler/Array.h
 /usr/include/poppler/BuiltinFont.h
@@ -285,38 +454,12 @@ popd
 /usr/include/poppler/UnicodeTypeTable.h
 /usr/include/poppler/ViewerPreferences.h
 /usr/include/poppler/XRef.h
-/usr/include/poppler/cpp/poppler-document.h
-/usr/include/poppler/cpp/poppler-embedded-file.h
-/usr/include/poppler/cpp/poppler-font.h
-/usr/include/poppler/cpp/poppler-global.h
-/usr/include/poppler/cpp/poppler-image.h
-/usr/include/poppler/cpp/poppler-page-renderer.h
-/usr/include/poppler/cpp/poppler-page-transition.h
-/usr/include/poppler/cpp/poppler-page.h
-/usr/include/poppler/cpp/poppler-rectangle.h
-/usr/include/poppler/cpp/poppler-toc.h
-/usr/include/poppler/cpp/poppler-version.h
 /usr/include/poppler/fofi/FoFiBase.h
 /usr/include/poppler/fofi/FoFiEncodings.h
 /usr/include/poppler/fofi/FoFiIdentifier.h
 /usr/include/poppler/fofi/FoFiTrueType.h
 /usr/include/poppler/fofi/FoFiType1.h
 /usr/include/poppler/fofi/FoFiType1C.h
-/usr/include/poppler/glib/poppler-action.h
-/usr/include/poppler/glib/poppler-annot.h
-/usr/include/poppler/glib/poppler-attachment.h
-/usr/include/poppler/glib/poppler-date.h
-/usr/include/poppler/glib/poppler-document.h
-/usr/include/poppler/glib/poppler-enums.h
-/usr/include/poppler/glib/poppler-features.h
-/usr/include/poppler/glib/poppler-form-field.h
-/usr/include/poppler/glib/poppler-layer.h
-/usr/include/poppler/glib/poppler-macros.h
-/usr/include/poppler/glib/poppler-media.h
-/usr/include/poppler/glib/poppler-movie.h
-/usr/include/poppler/glib/poppler-page.h
-/usr/include/poppler/glib/poppler-structure-element.h
-/usr/include/poppler/glib/poppler.h
 /usr/include/poppler/goo/FixedPoint.h
 /usr/include/poppler/goo/GooCheckedOps.h
 /usr/include/poppler/goo/GooLikely.h
@@ -333,15 +476,6 @@ popd
 /usr/include/poppler/goo/grandom.h
 /usr/include/poppler/goo/gstrtod.h
 /usr/include/poppler/poppler-config.h
-/usr/include/poppler/qt5/poppler-annotation.h
-/usr/include/poppler/qt5/poppler-export.h
-/usr/include/poppler/qt5/poppler-form.h
-/usr/include/poppler/qt5/poppler-link.h
-/usr/include/poppler/qt5/poppler-media.h
-/usr/include/poppler/qt5/poppler-optcontent.h
-/usr/include/poppler/qt5/poppler-page-transition.h
-/usr/include/poppler/qt5/poppler-qt5.h
-/usr/include/poppler/qt5/poppler-version.h
 /usr/include/poppler/splash/Splash.h
 /usr/include/poppler/splash/SplashBitmap.h
 /usr/include/poppler/splash/SplashClip.h
@@ -362,34 +496,18 @@ popd
 /usr/include/poppler/splash/SplashTypes.h
 /usr/include/poppler/splash/SplashXPath.h
 /usr/include/poppler/splash/SplashXPathScanner.h
-/usr/lib64/haswell/libpoppler-cpp.so
-/usr/lib64/haswell/libpoppler-glib.so
 /usr/lib64/haswell/libpoppler.so
-/usr/lib64/libpoppler-cpp.so
-/usr/lib64/libpoppler-glib.so
 /usr/lib64/libpoppler.so
-/usr/lib64/pkgconfig/poppler-cairo.pc
-/usr/lib64/pkgconfig/poppler-cpp.pc
-/usr/lib64/pkgconfig/poppler-glib.pc
-/usr/lib64/pkgconfig/poppler-qt5.pc
 /usr/lib64/pkgconfig/poppler-splash.pc
 /usr/lib64/pkgconfig/poppler.pc
 
-%files extras
-%defattr(-,root,root,-)
-/usr/lib64/haswell/libpoppler-qt5.so
-/usr/lib64/haswell/libpoppler-qt5.so.1
-/usr/lib64/libpoppler-qt5.so
-/usr/lib64/libpoppler-qt5.so.1
-
 %files lib
 %defattr(-,root,root,-)
-%exclude /usr/lib64/haswell/libpoppler-qt5.so.1
-%exclude /usr/lib64/libpoppler-qt5.so.1
 /usr/lib64/haswell/libpoppler-cpp.so.0
 /usr/lib64/haswell/libpoppler-cpp.so.0.6.0
 /usr/lib64/haswell/libpoppler-glib.so.8
 /usr/lib64/haswell/libpoppler-glib.so.8.12.0
+/usr/lib64/haswell/libpoppler-qt5.so.1
 /usr/lib64/haswell/libpoppler-qt5.so.1.18.0
 /usr/lib64/haswell/libpoppler.so.84
 /usr/lib64/haswell/libpoppler.so.84.0.0
@@ -397,6 +515,7 @@ popd
 /usr/lib64/libpoppler-cpp.so.0.6.0
 /usr/lib64/libpoppler-glib.so.8
 /usr/lib64/libpoppler-glib.so.8.12.0
+/usr/lib64/libpoppler-qt5.so.1
 /usr/lib64/libpoppler-qt5.so.1.18.0
 /usr/lib64/libpoppler.so.84
 /usr/lib64/libpoppler.so.84.0.0
