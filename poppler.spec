@@ -41,6 +41,9 @@ BuildRequires : qtbase-extras
 BuildRequires : tiff-dev
 BuildRequires : zlib-dev
 
+Patch1: oss-fuzz-8438.patch
+Patch2: oss-fuzz-12608.patch
+
 %description
 This is poppler, a PDF rendering library.
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
@@ -124,6 +127,10 @@ man components for the poppler package.
 
 %prep
 %setup -q -n poppler-0.73.0
+
+%patch1 -p1
+%patch2 -p1
+
 pushd ..
 cp -a poppler-0.73.0 buildavx2
 popd
