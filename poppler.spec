@@ -43,6 +43,8 @@ BuildRequires : zlib-dev
 
 Patch1: oss-fuzz-8438.patch
 Patch2: oss-fuzz-12608.patch
+Patch3: oss-fuzz-8724.patch
+Patch4: oss-fuzz-8467.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -130,6 +132,8 @@ man components for the poppler package.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 pushd ..
 cp -a poppler-0.73.0 buildavx2
