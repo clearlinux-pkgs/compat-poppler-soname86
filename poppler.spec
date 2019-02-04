@@ -45,6 +45,9 @@ Patch1: oss-fuzz-8438.patch
 Patch2: oss-fuzz-12608.patch
 Patch3: oss-fuzz-8724.patch
 Patch4: oss-fuzz-8467.patch
+Patch5: oss-fuzz-8612.patch
+Patch6: oss-fuzz-8715.patch
+Patch7: cve-2019-7310.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -134,6 +137,9 @@ man components for the poppler package.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 pushd ..
 cp -a poppler-0.73.0 buildavx2
