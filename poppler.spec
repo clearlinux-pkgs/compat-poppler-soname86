@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.73.0
-Release  : 35
+Release  : 36
 URL      : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz.sig
@@ -48,6 +48,7 @@ Patch4: oss-fuzz-8467.patch
 Patch5: oss-fuzz-8612.patch
 Patch6: oss-fuzz-8715.patch
 Patch7: cve-2019-7310.patch
+Patch8: oss-fuzz-12638.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -140,6 +141,7 @@ man components for the poppler package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 pushd ..
 cp -a poppler-0.73.0 buildavx2
