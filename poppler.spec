@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x3A6A4DB839EAA6D7 (aacid@kde.org)
 #
 Name     : poppler
-Version  : 0.73.0
-Release  : 36
-URL      : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
-Source0  : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
-Source99 : https://poppler.freedesktop.org/poppler-0.73.0.tar.xz.sig
+Version  : 0.74.0
+Release  : 37
+URL      : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
+Source0  : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
+Source99 : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 GPL-3.0
@@ -40,15 +40,6 @@ BuildRequires : pkgconfig(nss)
 BuildRequires : qtbase-extras
 BuildRequires : tiff-dev
 BuildRequires : zlib-dev
-
-Patch1: oss-fuzz-8438.patch
-Patch2: oss-fuzz-12608.patch
-Patch3: oss-fuzz-8724.patch
-Patch4: oss-fuzz-8467.patch
-Patch5: oss-fuzz-8612.patch
-Patch6: oss-fuzz-8715.patch
-Patch7: cve-2019-7310.patch
-Patch8: oss-fuzz-12638.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -132,19 +123,9 @@ man components for the poppler package.
 
 
 %prep
-%setup -q -n poppler-0.73.0
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-
+%setup -q -n poppler-0.74.0
 pushd ..
-cp -a poppler-0.73.0 buildavx2
+cp -a poppler-0.74.0 buildavx2
 popd
 
 %build
@@ -152,7 +133,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547233802
+export SOURCE_DATE_EPOCH=1550014650
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -175,7 +156,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1547233802
+export SOURCE_DATE_EPOCH=1550014650
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -348,6 +329,7 @@ popd
 %exclude /usr/lib64/libpoppler.so
 %exclude /usr/lib64/pkgconfig/poppler-splash.pc
 %exclude /usr/lib64/pkgconfig/poppler.pc
+/usr/include/poppler/cpp/poppler-destination.h
 /usr/include/poppler/cpp/poppler-document.h
 /usr/include/poppler/cpp/poppler-embedded-file.h
 /usr/include/poppler/cpp/poppler-font.h
@@ -523,21 +505,21 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/haswell/libpoppler-cpp.so.0
-/usr/lib64/haswell/libpoppler-cpp.so.0.6.0
+/usr/lib64/haswell/libpoppler-cpp.so.0.7.0
 /usr/lib64/haswell/libpoppler-glib.so.8
 /usr/lib64/haswell/libpoppler-glib.so.8.12.0
 /usr/lib64/haswell/libpoppler-qt5.so.1
-/usr/lib64/haswell/libpoppler-qt5.so.1.18.0
-/usr/lib64/haswell/libpoppler.so.84
-/usr/lib64/haswell/libpoppler.so.84.0.0
+/usr/lib64/haswell/libpoppler-qt5.so.1.19.0
+/usr/lib64/haswell/libpoppler.so.85
+/usr/lib64/haswell/libpoppler.so.85.0.0
 /usr/lib64/libpoppler-cpp.so.0
-/usr/lib64/libpoppler-cpp.so.0.6.0
+/usr/lib64/libpoppler-cpp.so.0.7.0
 /usr/lib64/libpoppler-glib.so.8
 /usr/lib64/libpoppler-glib.so.8.12.0
 /usr/lib64/libpoppler-qt5.so.1
-/usr/lib64/libpoppler-qt5.so.1.18.0
-/usr/lib64/libpoppler.so.84
-/usr/lib64/libpoppler.so.84.0.0
+/usr/lib64/libpoppler-qt5.so.1.19.0
+/usr/lib64/libpoppler.so.85
+/usr/lib64/libpoppler.so.85.0.0
 
 %files license
 %defattr(0644,root,root,0755)
