@@ -6,11 +6,11 @@
 #
 Name     : poppler
 Version  : 0.74.0
-Release  : 38
+Release  : 39
 URL      : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz.sig
-Summary  : No detailed summary available
+Summary  : PDF rendering library based on xpdf 3.0
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 GPL-3.0
 Requires: poppler-bin = %{version}-%{release}
@@ -63,7 +63,6 @@ Summary: bin components for the poppler package.
 Group: Binaries
 Requires: poppler-data = %{version}-%{release}
 Requires: poppler-license = %{version}-%{release}
-Requires: poppler-man = %{version}-%{release}
 
 %description bin
 bin components for the poppler package.
@@ -83,7 +82,9 @@ Group: Development
 Requires: poppler-lib = %{version}-%{release}
 Requires: poppler-bin = %{version}-%{release}
 Requires: poppler-data = %{version}-%{release}
+Requires: poppler-man = %{version}-%{release}
 Provides: poppler-devel = %{version}-%{release}
+Requires: poppler = %{version}-%{release}
 
 %description dev
 dev components for the poppler package.
@@ -135,20 +136,18 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551300251
+export SOURCE_DATE_EPOCH=1551580347
 mkdir -p clr-build
 pushd clr-build
-export LDFLAGS="${LDFLAGS} -fno-lto"
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %cmake .. -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 mkdir -p clr-build-avx2
 pushd clr-build-avx2
-export LDFLAGS="${LDFLAGS} -fno-lto"
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
@@ -156,11 +155,11 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semanti
 export CFLAGS="$CFLAGS -march=haswell -m64"
 export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
 %cmake .. -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1551300251
+export SOURCE_DATE_EPOCH=1551580347
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -502,12 +501,16 @@ popd
 /usr/include/poppler/splash/SplashXPath.h
 /usr/include/poppler/splash/SplashXPathScanner.h
 /usr/lib64/haswell/libpoppler.so
+/usr/lib64/libpoppler-qt5.so.1
+/usr/lib64/libpoppler-qt5.so.1.19.0
 /usr/lib64/libpoppler.so
 /usr/lib64/pkgconfig/poppler-splash.pc
 /usr/lib64/pkgconfig/poppler.pc
 
 %files lib
 %defattr(-,root,root,-)
+%exclude /usr/lib64/libpoppler-qt5.so.1
+%exclude /usr/lib64/libpoppler-qt5.so.1.19.0
 /usr/lib64/haswell/libpoppler-cpp.so.0
 /usr/lib64/haswell/libpoppler-cpp.so.0.7.0
 /usr/lib64/haswell/libpoppler-glib.so.8
@@ -520,8 +523,6 @@ popd
 /usr/lib64/libpoppler-cpp.so.0.7.0
 /usr/lib64/libpoppler-glib.so.8
 /usr/lib64/libpoppler-glib.so.8.12.0
-/usr/lib64/libpoppler-qt5.so.1
-/usr/lib64/libpoppler-qt5.so.1.19.0
 /usr/lib64/libpoppler.so.85
 /usr/lib64/libpoppler.so.85.0.0
 
