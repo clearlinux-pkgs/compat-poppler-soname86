@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.74.0
-Release  : 39
+Release  : 40
 URL      : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz.sig
@@ -82,7 +82,6 @@ Group: Development
 Requires: poppler-lib = %{version}-%{release}
 Requires: poppler-bin = %{version}-%{release}
 Requires: poppler-data = %{version}-%{release}
-Requires: poppler-man = %{version}-%{release}
 Provides: poppler-devel = %{version}-%{release}
 Requires: poppler = %{version}-%{release}
 
@@ -136,9 +135,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551580347
+export SOURCE_DATE_EPOCH=1551781352
 mkdir -p clr-build
 pushd clr-build
+export LDFLAGS="${LDFLAGS} -fno-lto"
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -148,6 +148,7 @@ make  %{?_smp_mflags}
 popd
 mkdir -p clr-build-avx2
 pushd clr-build-avx2
+export LDFLAGS="${LDFLAGS} -fno-lto"
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
@@ -159,7 +160,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1551580347
+export SOURCE_DATE_EPOCH=1551781352
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -500,6 +501,8 @@ popd
 /usr/include/poppler/splash/SplashTypes.h
 /usr/include/poppler/splash/SplashXPath.h
 /usr/include/poppler/splash/SplashXPathScanner.h
+/usr/lib64/haswell/libpoppler-qt5.so.1
+/usr/lib64/haswell/libpoppler-qt5.so.1.19.0
 /usr/lib64/haswell/libpoppler.so
 /usr/lib64/libpoppler-qt5.so.1
 /usr/lib64/libpoppler-qt5.so.1.19.0
@@ -509,14 +512,14 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+%exclude /usr/lib64/haswell/libpoppler-qt5.so.1
+%exclude /usr/lib64/haswell/libpoppler-qt5.so.1.19.0
 %exclude /usr/lib64/libpoppler-qt5.so.1
 %exclude /usr/lib64/libpoppler-qt5.so.1.19.0
 /usr/lib64/haswell/libpoppler-cpp.so.0
 /usr/lib64/haswell/libpoppler-cpp.so.0.7.0
 /usr/lib64/haswell/libpoppler-glib.so.8
 /usr/lib64/haswell/libpoppler-glib.so.8.12.0
-/usr/lib64/haswell/libpoppler-qt5.so.1
-/usr/lib64/haswell/libpoppler-qt5.so.1.19.0
 /usr/lib64/haswell/libpoppler.so.85
 /usr/lib64/haswell/libpoppler.so.85.0.0
 /usr/lib64/libpoppler-cpp.so.0
