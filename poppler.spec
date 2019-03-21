@@ -6,11 +6,11 @@
 #
 Name     : poppler
 Version  : 0.74.0
-Release  : 40
+Release  : 42
 URL      : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz.sig
-Summary  : PDF rendering library based on xpdf 3.0
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 GPL-3.0
 Requires: poppler-bin = %{version}-%{release}
@@ -40,7 +40,9 @@ BuildRequires : pkgconfig(nss)
 BuildRequires : qtbase-extras
 BuildRequires : tiff-dev
 BuildRequires : zlib-dev
-Patch1: CVE-2019-9200.patch
+Patch1: fix-signature-handler.patch
+Patch2: CVE-2019-9200.patch
+Patch3: CVE-2019-9903.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -63,6 +65,7 @@ Summary: bin components for the poppler package.
 Group: Binaries
 Requires: poppler-data = %{version}-%{release}
 Requires: poppler-license = %{version}-%{release}
+Requires: poppler-man = %{version}-%{release}
 
 %description bin
 bin components for the poppler package.
@@ -83,7 +86,6 @@ Requires: poppler-lib = %{version}-%{release}
 Requires: poppler-bin = %{version}-%{release}
 Requires: poppler-data = %{version}-%{release}
 Provides: poppler-devel = %{version}-%{release}
-Requires: poppler = %{version}-%{release}
 
 %description dev
 dev components for the poppler package.
@@ -126,6 +128,8 @@ man components for the poppler package.
 %prep
 %setup -q -n poppler-0.74.0
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 pushd ..
 cp -a poppler-0.74.0 buildavx2
 popd
@@ -135,7 +139,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551781352
+export SOURCE_DATE_EPOCH=1553198914
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -144,7 +148,7 @@ export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-i
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %cmake .. -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 mkdir -p clr-build-avx2
 pushd clr-build-avx2
@@ -156,11 +160,11 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semanti
 export CFLAGS="$CFLAGS -march=haswell -m64"
 export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
 %cmake .. -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1551781352
+export SOURCE_DATE_EPOCH=1553198914
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING

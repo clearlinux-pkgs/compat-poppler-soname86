@@ -1,0 +1,38 @@
+From 33befc25c42ff52e44ffd857a4a114b180a952e4 Mon Sep 17 00:00:00 2001
+From: Albert Astals Cid <aacid@kde.org>
+Date: Fri, 1 Mar 2019 17:46:55 +0100
+Subject: [PATCH] SignatureHandler: Fix crash on broken files
+
+Issue #732
+---
+ poppler/SignatureHandler.cc | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/poppler/SignatureHandler.cc b/poppler/SignatureHandler.cc
+index 18033b48..c8258403 100644
+--- a/poppler/SignatureHandler.cc
++++ b/poppler/SignatureHandler.cc
+@@ -49,6 +49,10 @@ char *SignatureHandler::getSignerName()
+       return nullptr;
+ 
+   CERTCertificate *cert = NSS_CMSSignerInfo_GetSigningCertificate(CMSSignerInfo, CERT_GetDefaultCertDB());
++
++  if (!cert)
++      return nullptr;
++
+   return CERT_GetCommonName(&cert->subject);
+ }
+ 
+@@ -397,6 +401,9 @@ SignatureValidationStatus SignatureHandler::validateSignature()
+   if (!NSS_IsInitialized())
+     return SIGNATURE_GENERIC_ERROR;
+ 
++  if (!hash_context)
++    return SIGNATURE_GENERIC_ERROR;
++
+   digest_buffer = (unsigned char *)PORT_Alloc(hash_length);
+   unsigned int result_len = 0;
+ 
+-- 
+2.18.1
+
