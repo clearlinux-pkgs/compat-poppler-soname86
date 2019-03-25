@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x3A6A4DB839EAA6D7 (aacid@kde.org)
 #
 Name     : poppler
-Version  : 0.74.0
-Release  : 42
-URL      : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
-Source0  : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz
-Source99 : https://poppler.freedesktop.org/poppler-0.74.0.tar.xz.sig
+Version  : 0.75.0
+Release  : 43
+URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
+Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
+Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 GPL-3.0
@@ -40,9 +40,6 @@ BuildRequires : pkgconfig(nss)
 BuildRequires : qtbase-extras
 BuildRequires : tiff-dev
 BuildRequires : zlib-dev
-Patch1: fix-signature-handler.patch
-Patch2: CVE-2019-9200.patch
-Patch3: CVE-2019-9903.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -126,12 +123,9 @@ man components for the poppler package.
 
 
 %prep
-%setup -q -n poppler-0.74.0
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -q -n poppler-0.75.0
 pushd ..
-cp -a poppler-0.74.0 buildavx2
+cp -a poppler-0.75.0 buildavx2
 popd
 
 %build
@@ -139,7 +133,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1553198914
+export SOURCE_DATE_EPOCH=1553534297
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -164,7 +158,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1553198914
+export SOURCE_DATE_EPOCH=1553534297
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
@@ -182,6 +176,7 @@ popd
 
 %files bin
 %defattr(-,root,root,-)
+/usr/bin/haswell/pdfattach
 /usr/bin/haswell/pdfdetach
 /usr/bin/haswell/pdffonts
 /usr/bin/haswell/pdfimages
@@ -194,6 +189,7 @@ popd
 /usr/bin/haswell/pdftops
 /usr/bin/haswell/pdftotext
 /usr/bin/haswell/pdfunite
+/usr/bin/pdfattach
 /usr/bin/pdfdetach
 /usr/bin/pdffonts
 /usr/bin/pdfimages
@@ -524,14 +520,14 @@ popd
 /usr/lib64/haswell/libpoppler-cpp.so.0.7.0
 /usr/lib64/haswell/libpoppler-glib.so.8
 /usr/lib64/haswell/libpoppler-glib.so.8.12.0
-/usr/lib64/haswell/libpoppler.so.85
-/usr/lib64/haswell/libpoppler.so.85.0.0
+/usr/lib64/haswell/libpoppler.so.86
+/usr/lib64/haswell/libpoppler.so.86.0.0
 /usr/lib64/libpoppler-cpp.so.0
 /usr/lib64/libpoppler-cpp.so.0.7.0
 /usr/lib64/libpoppler-glib.so.8
 /usr/lib64/libpoppler-glib.so.8.12.0
-/usr/lib64/libpoppler.so.85
-/usr/lib64/libpoppler.so.85.0.0
+/usr/lib64/libpoppler.so.86
+/usr/lib64/libpoppler.so.86.0.0
 
 %files license
 %defattr(0644,root,root,0755)
@@ -541,6 +537,7 @@ popd
 
 %files man
 %defattr(0644,root,root,0755)
+/usr/share/man/man1/pdfattach.1
 /usr/share/man/man1/pdfdetach.1
 /usr/share/man/man1/pdffonts.1
 /usr/share/man/man1/pdfimages.1
