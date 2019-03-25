@@ -5,7 +5,11 @@
 
 
 
-When updating poppler, cups-filters needs to be rebuilt as well
+When updating poppler, please rebuild the following packages:
+	* cups-filters
+	* kitinerary
+	* libreoffice
+
 Remember to update the header list in the extras file
 
 
