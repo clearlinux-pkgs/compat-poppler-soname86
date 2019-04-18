@@ -6,7 +6,7 @@
 #
 Name     : poppler
 Version  : 0.75.0
-Release  : 46
+Release  : 47
 URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
@@ -42,6 +42,7 @@ BuildRequires : tiff-dev
 BuildRequires : zlib-dev
 Patch1: CVE-2019-10873.patch
 Patch2: CVE-2019-11026.patch
+Patch3: CVE-2019-9631.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -128,16 +129,14 @@ man components for the poppler package.
 %setup -q -n poppler-0.75.0
 %patch1 -p1
 %patch2 -p1
-pushd ..
-cp -a poppler-0.75.0 buildavx2
-popd
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555360231
+export SOURCE_DATE_EPOCH=1555624634
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -162,7 +161,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555360231
+export SOURCE_DATE_EPOCH=1555624634
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/poppler
 cp COPYING %{buildroot}/usr/share/package-licenses/poppler/COPYING
