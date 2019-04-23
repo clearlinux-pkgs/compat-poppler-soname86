@@ -6,7 +6,7 @@
 #
 Name     : compat-poppler-soname86
 Version  : 0.75.0
-Release  : 51
+Release  : 52
 URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
@@ -136,7 +136,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555981560
+export SOURCE_DATE_EPOCH=1555981903
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
@@ -148,7 +148,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555981560
+export SOURCE_DATE_EPOCH=1555981903
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-poppler-soname86
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-poppler-soname86/COPYING
