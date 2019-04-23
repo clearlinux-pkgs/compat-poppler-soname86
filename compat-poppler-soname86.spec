@@ -6,7 +6,7 @@
 #
 Name     : compat-poppler-soname86
 Version  : 0.75.0
-Release  : 50
+Release  : 51
 URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
