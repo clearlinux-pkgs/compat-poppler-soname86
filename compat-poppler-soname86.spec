@@ -6,7 +6,7 @@
 #
 Name     : compat-poppler-soname86
 Version  : 0.75.0
-Release  : 49
+Release  : 50
 URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
@@ -136,7 +136,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555980919
+export SOURCE_DATE_EPOCH=1555981560
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
@@ -148,7 +148,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555980919
+export SOURCE_DATE_EPOCH=1555981560
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-poppler-soname86
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-poppler-soname86/COPYING
@@ -168,24 +168,24 @@ rm %{buildroot}/usr/lib64/*qt*
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/pdfattach
-/usr/bin/pdfdetach
-/usr/bin/pdffonts
-/usr/bin/pdfimages
-/usr/bin/pdfinfo
-/usr/bin/pdfseparate
-/usr/bin/pdfsig
-/usr/bin/pdftocairo
-/usr/bin/pdftohtml
-/usr/bin/pdftoppm
-/usr/bin/pdftops
-/usr/bin/pdftotext
-/usr/bin/pdfunite
+%exclude /usr/bin/pdfattach
+%exclude /usr/bin/pdfdetach
+%exclude /usr/bin/pdffonts
+%exclude /usr/bin/pdfimages
+%exclude /usr/bin/pdfinfo
+%exclude /usr/bin/pdfseparate
+%exclude /usr/bin/pdfsig
+%exclude /usr/bin/pdftocairo
+%exclude /usr/bin/pdftohtml
+%exclude /usr/bin/pdftoppm
+%exclude /usr/bin/pdftops
+%exclude /usr/bin/pdftotext
+%exclude /usr/bin/pdfunite
 
 %files data
 %defattr(-,root,root,-)
-/usr/lib64/girepository-1.0/Poppler-0.18.typelib
-/usr/share/gir-1.0/*.gir
+%exclude /usr/lib64/girepository-1.0/Poppler-0.18.typelib
+%exclude /usr/share/gir-1.0/Poppler-0.18.gir
 
 %files dev
 %defattr(-,root,root,-)
@@ -266,12 +266,39 @@ rm %{buildroot}/usr/lib64/*qt*
 %exclude /usr/include/poppler/UnicodeTypeTable.h
 %exclude /usr/include/poppler/ViewerPreferences.h
 %exclude /usr/include/poppler/XRef.h
+%exclude /usr/include/poppler/cpp/poppler-destination.h
+%exclude /usr/include/poppler/cpp/poppler-document.h
+%exclude /usr/include/poppler/cpp/poppler-embedded-file.h
+%exclude /usr/include/poppler/cpp/poppler-font.h
+%exclude /usr/include/poppler/cpp/poppler-global.h
+%exclude /usr/include/poppler/cpp/poppler-image.h
+%exclude /usr/include/poppler/cpp/poppler-page-renderer.h
+%exclude /usr/include/poppler/cpp/poppler-page-transition.h
+%exclude /usr/include/poppler/cpp/poppler-page.h
+%exclude /usr/include/poppler/cpp/poppler-rectangle.h
+%exclude /usr/include/poppler/cpp/poppler-toc.h
+%exclude /usr/include/poppler/cpp/poppler-version.h
 %exclude /usr/include/poppler/fofi/FoFiBase.h
 %exclude /usr/include/poppler/fofi/FoFiEncodings.h
 %exclude /usr/include/poppler/fofi/FoFiIdentifier.h
 %exclude /usr/include/poppler/fofi/FoFiTrueType.h
 %exclude /usr/include/poppler/fofi/FoFiType1.h
 %exclude /usr/include/poppler/fofi/FoFiType1C.h
+%exclude /usr/include/poppler/glib/poppler-action.h
+%exclude /usr/include/poppler/glib/poppler-annot.h
+%exclude /usr/include/poppler/glib/poppler-attachment.h
+%exclude /usr/include/poppler/glib/poppler-date.h
+%exclude /usr/include/poppler/glib/poppler-document.h
+%exclude /usr/include/poppler/glib/poppler-enums.h
+%exclude /usr/include/poppler/glib/poppler-features.h
+%exclude /usr/include/poppler/glib/poppler-form-field.h
+%exclude /usr/include/poppler/glib/poppler-layer.h
+%exclude /usr/include/poppler/glib/poppler-macros.h
+%exclude /usr/include/poppler/glib/poppler-media.h
+%exclude /usr/include/poppler/glib/poppler-movie.h
+%exclude /usr/include/poppler/glib/poppler-page.h
+%exclude /usr/include/poppler/glib/poppler-structure-element.h
+%exclude /usr/include/poppler/glib/poppler.h
 %exclude /usr/include/poppler/goo/FixedPoint.h
 %exclude /usr/include/poppler/goo/GooCheckedOps.h
 %exclude /usr/include/poppler/goo/GooLikely.h
@@ -288,6 +315,15 @@ rm %{buildroot}/usr/lib64/*qt*
 %exclude /usr/include/poppler/goo/grandom.h
 %exclude /usr/include/poppler/goo/gstrtod.h
 %exclude /usr/include/poppler/poppler-config.h
+%exclude /usr/include/poppler/qt5/poppler-annotation.h
+%exclude /usr/include/poppler/qt5/poppler-export.h
+%exclude /usr/include/poppler/qt5/poppler-form.h
+%exclude /usr/include/poppler/qt5/poppler-link.h
+%exclude /usr/include/poppler/qt5/poppler-media.h
+%exclude /usr/include/poppler/qt5/poppler-optcontent.h
+%exclude /usr/include/poppler/qt5/poppler-page-transition.h
+%exclude /usr/include/poppler/qt5/poppler-qt5.h
+%exclude /usr/include/poppler/qt5/poppler-version.h
 %exclude /usr/include/poppler/splash/Splash.h
 %exclude /usr/include/poppler/splash/SplashBitmap.h
 %exclude /usr/include/poppler/splash/SplashClip.h
@@ -309,48 +345,12 @@ rm %{buildroot}/usr/lib64/*qt*
 %exclude /usr/include/poppler/splash/SplashXPath.h
 %exclude /usr/include/poppler/splash/SplashXPathScanner.h
 %exclude /usr/lib64/libpoppler.so
+%exclude /usr/lib64/pkgconfig/poppler-cairo.pc
+%exclude /usr/lib64/pkgconfig/poppler-cpp.pc
+%exclude /usr/lib64/pkgconfig/poppler-glib.pc
+%exclude /usr/lib64/pkgconfig/poppler-qt5.pc
 %exclude /usr/lib64/pkgconfig/poppler-splash.pc
 %exclude /usr/lib64/pkgconfig/poppler.pc
-/usr/include/poppler/cpp/poppler-destination.h
-/usr/include/poppler/cpp/poppler-document.h
-/usr/include/poppler/cpp/poppler-embedded-file.h
-/usr/include/poppler/cpp/poppler-font.h
-/usr/include/poppler/cpp/poppler-global.h
-/usr/include/poppler/cpp/poppler-image.h
-/usr/include/poppler/cpp/poppler-page-renderer.h
-/usr/include/poppler/cpp/poppler-page-transition.h
-/usr/include/poppler/cpp/poppler-page.h
-/usr/include/poppler/cpp/poppler-rectangle.h
-/usr/include/poppler/cpp/poppler-toc.h
-/usr/include/poppler/cpp/poppler-version.h
-/usr/include/poppler/glib/poppler-action.h
-/usr/include/poppler/glib/poppler-annot.h
-/usr/include/poppler/glib/poppler-attachment.h
-/usr/include/poppler/glib/poppler-date.h
-/usr/include/poppler/glib/poppler-document.h
-/usr/include/poppler/glib/poppler-enums.h
-/usr/include/poppler/glib/poppler-features.h
-/usr/include/poppler/glib/poppler-form-field.h
-/usr/include/poppler/glib/poppler-layer.h
-/usr/include/poppler/glib/poppler-macros.h
-/usr/include/poppler/glib/poppler-media.h
-/usr/include/poppler/glib/poppler-movie.h
-/usr/include/poppler/glib/poppler-page.h
-/usr/include/poppler/glib/poppler-structure-element.h
-/usr/include/poppler/glib/poppler.h
-/usr/include/poppler/qt5/poppler-annotation.h
-/usr/include/poppler/qt5/poppler-export.h
-/usr/include/poppler/qt5/poppler-form.h
-/usr/include/poppler/qt5/poppler-link.h
-/usr/include/poppler/qt5/poppler-media.h
-/usr/include/poppler/qt5/poppler-optcontent.h
-/usr/include/poppler/qt5/poppler-page-transition.h
-/usr/include/poppler/qt5/poppler-qt5.h
-/usr/include/poppler/qt5/poppler-version.h
-/usr/lib64/pkgconfig/poppler-cairo.pc
-/usr/lib64/pkgconfig/poppler-cpp.pc
-/usr/lib64/pkgconfig/poppler-glib.pc
-/usr/lib64/pkgconfig/poppler-qt5.pc
 
 %files extras
 %defattr(-,root,root,-)
@@ -484,22 +484,22 @@ rm %{buildroot}/usr/lib64/*qt*
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/compat-poppler-soname86/COPYING
-/usr/share/package-licenses/compat-poppler-soname86/COPYING3
-/usr/share/package-licenses/compat-poppler-soname86/cmake_modules_COPYING-CMAKE-SCRIPTS
+%exclude /usr/share/package-licenses/compat-poppler-soname86/COPYING
+%exclude /usr/share/package-licenses/compat-poppler-soname86/COPYING3
+%exclude /usr/share/package-licenses/compat-poppler-soname86/cmake_modules_COPYING-CMAKE-SCRIPTS
 
 %files man
 %defattr(0644,root,root,0755)
-/usr/share/man/man1/pdfattach.1
-/usr/share/man/man1/pdfdetach.1
-/usr/share/man/man1/pdffonts.1
-/usr/share/man/man1/pdfimages.1
-/usr/share/man/man1/pdfinfo.1
-/usr/share/man/man1/pdfseparate.1
-/usr/share/man/man1/pdfsig.1
-/usr/share/man/man1/pdftocairo.1
-/usr/share/man/man1/pdftohtml.1
-/usr/share/man/man1/pdftoppm.1
-/usr/share/man/man1/pdftops.1
-/usr/share/man/man1/pdftotext.1
-/usr/share/man/man1/pdfunite.1
+%exclude /usr/share/man/man1/pdfattach.1
+%exclude /usr/share/man/man1/pdfdetach.1
+%exclude /usr/share/man/man1/pdffonts.1
+%exclude /usr/share/man/man1/pdfimages.1
+%exclude /usr/share/man/man1/pdfinfo.1
+%exclude /usr/share/man/man1/pdfseparate.1
+%exclude /usr/share/man/man1/pdfsig.1
+%exclude /usr/share/man/man1/pdftocairo.1
+%exclude /usr/share/man/man1/pdftohtml.1
+%exclude /usr/share/man/man1/pdftoppm.1
+%exclude /usr/share/man/man1/pdftops.1
+%exclude /usr/share/man/man1/pdftotext.1
+%exclude /usr/share/man/man1/pdfunite.1

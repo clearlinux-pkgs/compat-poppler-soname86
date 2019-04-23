@@ -1,6 +1,5 @@
 ld-linux-x86-64.so.2
 libc.so.6
-libcairo.so.2
 libcurl.so.4
 libfontconfig.so.1
 libfreetype.so.6
