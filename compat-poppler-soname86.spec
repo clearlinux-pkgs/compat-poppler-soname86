@@ -6,7 +6,7 @@
 #
 Name     : compat-poppler-soname86
 Version  : 0.75.0
-Release  : 48
+Release  : 49
 URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
@@ -136,62 +136,38 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555979579
+export SOURCE_DATE_EPOCH=1555980919
 mkdir -p clr-build
 pushd clr-build
-export LDFLAGS="${LDFLAGS} -fno-lto"
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
+export FFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -fcf-protection=full -fstack-protector-strong "
 %cmake .. -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags} VERBOSE=1
-popd
-mkdir -p clr-build-avx2
-pushd clr-build-avx2
-export LDFLAGS="${LDFLAGS} -fno-lto"
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -march=haswell -mzero-caller-saved-regs=used "
-export CFLAGS="$CFLAGS -march=haswell -m64"
-export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
-%cmake .. -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555979579
+export SOURCE_DATE_EPOCH=1555980919
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-poppler-soname86
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-poppler-soname86/COPYING
 cp COPYING3 %{buildroot}/usr/share/package-licenses/compat-poppler-soname86/COPYING3
 cp cmake/modules/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/compat-poppler-soname86/cmake_modules_COPYING-CMAKE-SCRIPTS
-pushd clr-build-avx2
-%make_install_avx2  || :
-popd
 pushd clr-build
 %make_install
 popd
+## install_append content
+rm %{buildroot}/usr/lib64/*cpp*
+rm %{buildroot}/usr/lib64/*glib*
+rm %{buildroot}/usr/lib64/*qt*
+## install_append end
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/haswell/pdfattach
-/usr/bin/haswell/pdfdetach
-/usr/bin/haswell/pdffonts
-/usr/bin/haswell/pdfimages
-/usr/bin/haswell/pdfinfo
-/usr/bin/haswell/pdfseparate
-/usr/bin/haswell/pdfsig
-/usr/bin/haswell/pdftocairo
-/usr/bin/haswell/pdftohtml
-/usr/bin/haswell/pdftoppm
-/usr/bin/haswell/pdftops
-/usr/bin/haswell/pdftotext
-/usr/bin/haswell/pdfunite
 /usr/bin/pdfattach
 /usr/bin/pdfdetach
 /usr/bin/pdffonts
@@ -332,7 +308,6 @@ popd
 %exclude /usr/include/poppler/splash/SplashTypes.h
 %exclude /usr/include/poppler/splash/SplashXPath.h
 %exclude /usr/include/poppler/splash/SplashXPathScanner.h
-%exclude /usr/lib64/haswell/libpoppler.so
 %exclude /usr/lib64/libpoppler.so
 %exclude /usr/lib64/pkgconfig/poppler-splash.pc
 %exclude /usr/lib64/pkgconfig/poppler.pc
@@ -372,12 +347,6 @@ popd
 /usr/include/poppler/qt5/poppler-page-transition.h
 /usr/include/poppler/qt5/poppler-qt5.h
 /usr/include/poppler/qt5/poppler-version.h
-/usr/lib64/haswell/libpoppler-cpp.so
-/usr/lib64/haswell/libpoppler-glib.so
-/usr/lib64/haswell/libpoppler-qt5.so
-/usr/lib64/libpoppler-cpp.so
-/usr/lib64/libpoppler-glib.so
-/usr/lib64/libpoppler-qt5.so
 /usr/lib64/pkgconfig/poppler-cairo.pc
 /usr/lib64/pkgconfig/poppler-cpp.pc
 /usr/lib64/pkgconfig/poppler-glib.pc
@@ -504,31 +473,12 @@ popd
 /usr/include/poppler/splash/SplashTypes.h
 /usr/include/poppler/splash/SplashXPath.h
 /usr/include/poppler/splash/SplashXPathScanner.h
-/usr/lib64/haswell/libpoppler-qt5.so.1
-/usr/lib64/haswell/libpoppler-qt5.so.1.19.0
-/usr/lib64/haswell/libpoppler.so
-/usr/lib64/libpoppler-qt5.so.1
-/usr/lib64/libpoppler-qt5.so.1.19.0
 /usr/lib64/libpoppler.so
 /usr/lib64/pkgconfig/poppler-splash.pc
 /usr/lib64/pkgconfig/poppler.pc
 
 %files lib
 %defattr(-,root,root,-)
-%exclude /usr/lib64/haswell/libpoppler-qt5.so.1
-%exclude /usr/lib64/haswell/libpoppler-qt5.so.1.19.0
-%exclude /usr/lib64/libpoppler-qt5.so.1
-%exclude /usr/lib64/libpoppler-qt5.so.1.19.0
-/usr/lib64/haswell/libpoppler-cpp.so.0
-/usr/lib64/haswell/libpoppler-cpp.so.0.7.0
-/usr/lib64/haswell/libpoppler-glib.so.8
-/usr/lib64/haswell/libpoppler-glib.so.8.12.0
-/usr/lib64/haswell/libpoppler.so.86
-/usr/lib64/haswell/libpoppler.so.86.0.0
-/usr/lib64/libpoppler-cpp.so.0
-/usr/lib64/libpoppler-cpp.so.0.7.0
-/usr/lib64/libpoppler-glib.so.8
-/usr/lib64/libpoppler-glib.so.8.12.0
 /usr/lib64/libpoppler.so.86
 /usr/lib64/libpoppler.so.86.0.0
 
