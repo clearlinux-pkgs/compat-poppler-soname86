@@ -6,7 +6,7 @@
 #
 Name     : compat-poppler-soname86
 Version  : 0.75.0
-Release  : 52
+Release  : 53
 URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
@@ -91,14 +91,6 @@ Requires: compat-poppler-soname86 = %{version}-%{release}
 dev components for the compat-poppler-soname86 package.
 
 
-%package extras
-Summary: extras components for the compat-poppler-soname86 package.
-Group: Default
-
-%description extras
-extras components for the compat-poppler-soname86 package.
-
-
 %package lib
 Summary: lib components for the compat-poppler-soname86 package.
 Group: Libraries
@@ -136,7 +128,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555981903
+export SOURCE_DATE_EPOCH=1555987627
 mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
@@ -148,7 +140,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555981903
+export SOURCE_DATE_EPOCH=1555987627
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-poppler-soname86
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-poppler-soname86/COPYING
@@ -351,131 +343,6 @@ rm %{buildroot}/usr/lib64/*qt*
 %exclude /usr/lib64/pkgconfig/poppler-qt5.pc
 %exclude /usr/lib64/pkgconfig/poppler-splash.pc
 %exclude /usr/lib64/pkgconfig/poppler.pc
-
-%files extras
-%defattr(-,root,root,-)
-/usr/include/poppler/Annot.h
-/usr/include/poppler/Array.h
-/usr/include/poppler/BuiltinFont.h
-/usr/include/poppler/BuiltinFontTables.h
-/usr/include/poppler/CMap.h
-/usr/include/poppler/CachedFile.h
-/usr/include/poppler/Catalog.h
-/usr/include/poppler/CertificateInfo.h
-/usr/include/poppler/CharCodeToUnicode.h
-/usr/include/poppler/CharTypes.h
-/usr/include/poppler/CompactFontTables.h
-/usr/include/poppler/CurlCachedFile.h
-/usr/include/poppler/CurlPDFDocBuilder.h
-/usr/include/poppler/DateInfo.h
-/usr/include/poppler/Decrypt.h
-/usr/include/poppler/Dict.h
-/usr/include/poppler/Error.h
-/usr/include/poppler/ErrorCodes.h
-/usr/include/poppler/FileSpec.h
-/usr/include/poppler/FontEncodingTables.h
-/usr/include/poppler/FontInfo.h
-/usr/include/poppler/Form.h
-/usr/include/poppler/Function.h
-/usr/include/poppler/Gfx.h
-/usr/include/poppler/GfxFont.h
-/usr/include/poppler/GfxState.h
-/usr/include/poppler/GfxState_helpers.h
-/usr/include/poppler/GlobalParams.h
-/usr/include/poppler/Hints.h
-/usr/include/poppler/JArithmeticDecoder.h
-/usr/include/poppler/JBIG2Stream.h
-/usr/include/poppler/JPXStream.h
-/usr/include/poppler/Lexer.h
-/usr/include/poppler/Linearization.h
-/usr/include/poppler/Link.h
-/usr/include/poppler/LocalPDFDocBuilder.h
-/usr/include/poppler/MarkedContentOutputDev.h
-/usr/include/poppler/Movie.h
-/usr/include/poppler/NameToCharCode.h
-/usr/include/poppler/NameToUnicodeTable.h
-/usr/include/poppler/Object.h
-/usr/include/poppler/OptionalContent.h
-/usr/include/poppler/Outline.h
-/usr/include/poppler/OutputDev.h
-/usr/include/poppler/PDFDoc.h
-/usr/include/poppler/PDFDocBuilder.h
-/usr/include/poppler/PDFDocEncoding.h
-/usr/include/poppler/PDFDocFactory.h
-/usr/include/poppler/PSOutputDev.h
-/usr/include/poppler/PSTokenizer.h
-/usr/include/poppler/Page.h
-/usr/include/poppler/PageTransition.h
-/usr/include/poppler/Parser.h
-/usr/include/poppler/PopplerCache.h
-/usr/include/poppler/PreScanOutputDev.h
-/usr/include/poppler/ProfileData.h
-/usr/include/poppler/Rendition.h
-/usr/include/poppler/SecurityHandler.h
-/usr/include/poppler/Sound.h
-/usr/include/poppler/SplashOutputDev.h
-/usr/include/poppler/StdinCachedFile.h
-/usr/include/poppler/StdinPDFDocBuilder.h
-/usr/include/poppler/Stream-CCITT.h
-/usr/include/poppler/Stream.h
-/usr/include/poppler/StructElement.h
-/usr/include/poppler/StructTreeRoot.h
-/usr/include/poppler/TextOutputDev.h
-/usr/include/poppler/UTF.h
-/usr/include/poppler/UnicodeCClassTables.h
-/usr/include/poppler/UnicodeCompTables.h
-/usr/include/poppler/UnicodeDecompTables.h
-/usr/include/poppler/UnicodeMap.h
-/usr/include/poppler/UnicodeMapFuncs.h
-/usr/include/poppler/UnicodeMapTables.h
-/usr/include/poppler/UnicodeTypeTable.h
-/usr/include/poppler/ViewerPreferences.h
-/usr/include/poppler/XRef.h
-/usr/include/poppler/fofi/FoFiBase.h
-/usr/include/poppler/fofi/FoFiEncodings.h
-/usr/include/poppler/fofi/FoFiIdentifier.h
-/usr/include/poppler/fofi/FoFiTrueType.h
-/usr/include/poppler/fofi/FoFiType1.h
-/usr/include/poppler/fofi/FoFiType1C.h
-/usr/include/poppler/goo/FixedPoint.h
-/usr/include/poppler/goo/GooCheckedOps.h
-/usr/include/poppler/goo/GooLikely.h
-/usr/include/poppler/goo/GooList.h
-/usr/include/poppler/goo/GooString.h
-/usr/include/poppler/goo/GooTimer.h
-/usr/include/poppler/goo/ImgWriter.h
-/usr/include/poppler/goo/JpegWriter.h
-/usr/include/poppler/goo/PNGWriter.h
-/usr/include/poppler/goo/TiffWriter.h
-/usr/include/poppler/goo/gdir.h
-/usr/include/poppler/goo/gfile.h
-/usr/include/poppler/goo/gmem.h
-/usr/include/poppler/goo/grandom.h
-/usr/include/poppler/goo/gstrtod.h
-/usr/include/poppler/poppler-config.h
-/usr/include/poppler/splash/Splash.h
-/usr/include/poppler/splash/SplashBitmap.h
-/usr/include/poppler/splash/SplashClip.h
-/usr/include/poppler/splash/SplashErrorCodes.h
-/usr/include/poppler/splash/SplashFTFont.h
-/usr/include/poppler/splash/SplashFTFontEngine.h
-/usr/include/poppler/splash/SplashFTFontFile.h
-/usr/include/poppler/splash/SplashFont.h
-/usr/include/poppler/splash/SplashFontEngine.h
-/usr/include/poppler/splash/SplashFontFile.h
-/usr/include/poppler/splash/SplashFontFileID.h
-/usr/include/poppler/splash/SplashGlyphBitmap.h
-/usr/include/poppler/splash/SplashMath.h
-/usr/include/poppler/splash/SplashPath.h
-/usr/include/poppler/splash/SplashPattern.h
-/usr/include/poppler/splash/SplashScreen.h
-/usr/include/poppler/splash/SplashState.h
-/usr/include/poppler/splash/SplashTypes.h
-/usr/include/poppler/splash/SplashXPath.h
-/usr/include/poppler/splash/SplashXPathScanner.h
-/usr/lib64/libpoppler.so
-/usr/lib64/pkgconfig/poppler-splash.pc
-/usr/lib64/pkgconfig/poppler.pc
 
 %files lib
 %defattr(-,root,root,-)
