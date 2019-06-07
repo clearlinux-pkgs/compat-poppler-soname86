@@ -6,7 +6,7 @@
 #
 Name     : compat-poppler-soname86
 Version  : 0.75.0
-Release  : 53
+Release  : 54
 URL      : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source0  : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz
 Source99 : https://poppler.freedesktop.org/poppler-0.75.0.tar.xz.sig
@@ -43,6 +43,7 @@ BuildRequires : zlib-dev
 Patch1: CVE-2019-10873.patch
 Patch2: CVE-2019-11026.patch
 Patch3: CVE-2019-9631.patch
+Patch4: CVE-2019-12293.patch
 
 %description
 This is poppler, a PDF rendering library.
@@ -122,25 +123,27 @@ man components for the compat-poppler-soname86 package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555987627
+export SOURCE_DATE_EPOCH=1559947703
 mkdir -p clr-build
 pushd clr-build
-export CFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
-export FFLAGS="$CFLAGS -fcf-protection=full -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -fcf-protection=full -fstack-protector-strong "
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 %cmake .. -DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_UTILS=ON -DENABLE_LIBOPENJPEG=none
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1555987627
+export SOURCE_DATE_EPOCH=1559947703
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-poppler-soname86
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-poppler-soname86/COPYING
